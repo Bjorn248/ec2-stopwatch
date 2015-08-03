@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -21,7 +21,16 @@ func getUser(c *gin.Context) {
 // the register function takes an email as the only input parameter and generates a UUID that it returns to the user
 func register(c *gin.Context) {
 	var json registration
+
 	if c.BindJSON(&json) == nil {
-		c.JSON(http.StatusOK, gin.H{"status": fmt.Sprintf("Hello Bjorn, your email is %s", json.Email)})
+		newToken, tokenErr := createVaultToken(vaultclient, json.Email)
+		if tokenErr != nil {
+			log.Fatal("err: %s", tokenErr)
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "user registered",
+			"email":     json.Email,
+			"api_token": newToken})
 	}
 }

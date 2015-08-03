@@ -40,21 +40,13 @@ var (
 	redisPassword = flag.String("redisPassword", os.Getenv("REDIS_PASSWORD"), "")
 )
 
+// Instantiate Vault Connection
+var (
+	vaultconfig             = api.DefaultConfig()
+	vaultclient, vaulterror = api.NewClient(vaultconfig)
+)
+
 func main() {
-
-	// Instantiate Vault Connection
-	config := api.DefaultConfig()
-	c, err := api.NewClient(config)
-	if err != nil {
-		log.Fatal("err: %s", err)
-	}
-
-	newToken, tokenErr := createVaultToken(c, "bjorn248@gmail.com")
-	if tokenErr != nil {
-		fmt.Println(tokenErr)
-	}
-
-	fmt.Println(newToken)
 
 	flag.Parse()
 	// Instantiate redis connection pool
@@ -89,12 +81,15 @@ func testRedis() {
 	fmt.Println(world)
 }
 
-func createVaultToken(c *api.Client, email string) (string, error) {
-	createVaultPolicy(c, email)
+func createVaultToken(vaultclient *api.Client, email string) (string, error) {
+	err := createVaultPolicy(vaultclient, email)
+	if err != nil {
+		log.Fatal("err: %s", err)
+	}
 	tcr := &api.TokenCreateRequest{
 		Policies:    []string{email},
 		DisplayName: email}
-	ta := c.Auth().Token()
+	ta := vaultclient.Auth().Token()
 	s, err := ta.Create(tcr)
 	if err != nil {
 		return "", err
@@ -102,8 +97,8 @@ func createVaultToken(c *api.Client, email string) (string, error) {
 	return s.Auth.ClientToken, nil
 }
 
-func createVaultPolicy(c *api.Client, email string) error {
-	sys := c.Sys()
+func createVaultPolicy(vaultclient *api.Client, email string) error {
+	sys := vaultclient.Sys()
 	rules := fmt.Sprintf("path \"secret/%s/*\" {\n  policy = \"write\"\n}", email)
 	return sys.PutPolicy(email, rules)
 }
