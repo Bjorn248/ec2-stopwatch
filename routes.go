@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,7 +14,7 @@ type registration struct {
 // This function returns the user object of the user
 // making the request
 func getUser(c *gin.Context) {
-	c.String(http.StatusOK, "Hello Bjorn")
+	c.JSON(http.StatusOK, gin.H{"user": "bjorn"})
 }
 
 // POST /register endpoint
@@ -21,6 +22,6 @@ func getUser(c *gin.Context) {
 func register(c *gin.Context) {
 	var json registration
 	if c.BindJSON(&json) == nil {
-		c.String(http.StatusOK, "Hello Bjorn, your email is %s", json.Email)
+		c.JSON(http.StatusOK, gin.H{"status": fmt.Sprintf("Hello Bjorn, your email is %s", json.Email)})
 	}
 }
