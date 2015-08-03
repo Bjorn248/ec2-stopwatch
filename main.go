@@ -51,7 +51,7 @@ func main() {
 
 	newToken, tokenErr := createVaultToken(c, "bjorn248@gmail.com")
 	if tokenErr != nil {
-		fmt.Println("uh oh")
+		fmt.Println(tokenErr)
 	}
 
 	fmt.Println(newToken)
