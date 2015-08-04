@@ -34,23 +34,44 @@ func newPool(server, password string) *redis.Pool {
 	}
 }
 
+// Declare redis connection variables
 var (
 	pool          *redis.Pool
 	redisServer   = flag.String("redisServer", ":6379", "")
 	redisPassword = flag.String("redisPassword", os.Getenv("REDIS_PASSWORD"), "")
 )
 
-// Instantiate Vault Connection
+// Declare Vault Connection Variables
 var (
-	vaultconfig             = api.DefaultConfig()
-	vaultclient, vaulterror = api.NewClient(vaultconfig)
+	vaultconfig *api.Config
+	vaultclient *api.Client
+	vaulterror  error
 )
 
 func main() {
 
+	// Check Environment Variables
+	if os.Getenv("REDIS_PASSWORD") == "" || os.Getenv("VAULT_TOKEN") == "" {
+		log.Fatal("REDIS_PASSWORD or VAULT_TOKEN NOT SET")
+	}
+
+	// Instantiate Vault Connection
+	vaultconfig = api.DefaultConfig()
+	vaultclient, vaulterror = api.NewClient(vaultconfig)
+
+	// Check VAULT_TOKEN for validity
+	_, authError := vaultclient.Logical().Read("auth/token/lookup-self")
+	if authError != nil {
+		log.Fatal("VAULT_TOKEN is not valid!")
+	}
+
 	flag.Parse()
 	// Instantiate redis connection pool
 	pool = newPool(*redisServer, *redisPassword)
+	poolErr := pool.Get().Err()
+	if poolErr != nil {
+		log.Fatalf("Something went wrong connecting to Redis! Error is '%s'", poolErr)
+	}
 
 	testRedis()
 
