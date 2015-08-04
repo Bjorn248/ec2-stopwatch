@@ -58,5 +58,8 @@ func register(c *gin.Context) {
 			"email":     json.Email,
 			"api_token": newToken})
 		return
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "invalid request json"})
 	}
 }
