@@ -29,11 +29,6 @@ func register(c *gin.Context) {
 	var json registration
 
 	if c.BindJSON(&json) == nil {
-		newToken, tokenErr := createVaultToken(vaultclient, json.Email)
-		if tokenErr != nil {
-			log.Print("Error creating vault token '%s'", tokenErr)
-		}
-
 		redisConn := pool.Get()
 		defer redisConn.Close()
 
@@ -46,6 +41,11 @@ func register(c *gin.Context) {
 				"status": "user already exists",
 				"email":  json.Email})
 			return
+		}
+
+		newToken, tokenErr := createVaultToken(vaultclient, json.Email)
+		if tokenErr != nil {
+			log.Print("Error creating vault token '%s'", tokenErr)
 		}
 
 		_, redisError = redisConn.Do("HMSET", json.Email, "email", json.Email)
