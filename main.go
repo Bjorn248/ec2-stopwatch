@@ -51,24 +51,31 @@ var (
 func main() {
 
 	// Check Environment Variables
-	if os.Getenv("REDIS_PASSWORD") == "" || os.Getenv("VAULT_TOKEN") == "" {
-		log.Fatal("REDIS_PASSWORD or VAULT_TOKEN NOT SET")
+	if os.Getenv("REDIS_PASSWORD") == "" {
+		log.Fatal("REDIS_PASSWORD NOT SET")
+	}
+	if os.Getenv("VAULT_TOKEN") == "" {
+		log.Fatal("VAULT_TOKEN NOT SET")
 	}
 
 	// Instantiate Vault Connection
 	vaultconfig = api.DefaultConfig()
 	vaultclient, vaulterror = api.NewClient(vaultconfig)
+	if vaulterror != nil {
+		log.Fatalf("Problem creating vault client, '%s'", vaulterror)
+	}
 
-	// Check VAULT_TOKEN for validity
+	// Check Vault Connection
 	_, authError := vaultclient.Logical().Read("auth/token/lookup-self")
 	if authError != nil {
-		log.Fatal("VAULT_TOKEN is not valid!")
+		log.Fatalf("Something went wrong connecting to Vault! Error is '%s'", authError)
 	}
 
 	flag.Parse()
 	// Instantiate redis connection pool
 	pool = newPool(*redisServer, *redisPassword)
 	poolErr := pool.Get().Err()
+	// Check redis connection
 	if poolErr != nil {
 		log.Fatalf("Something went wrong connecting to Redis! Error is '%s'", poolErr)
 	}
