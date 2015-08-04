@@ -1,12 +1,18 @@
 package main
 
 import (
+	// "encoding/json"
+	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
 type registration struct {
+	Email string `form:"email" json:"email" binding:"required"`
+}
+
+type User struct {
 	Email string `form:"email" json:"email" binding:"required"`
 }
 
@@ -25,12 +31,32 @@ func register(c *gin.Context) {
 	if c.BindJSON(&json) == nil {
 		newToken, tokenErr := createVaultToken(vaultclient, json.Email)
 		if tokenErr != nil {
-			log.Fatal("err: %s", tokenErr)
+			log.Print("Error creating vault token '%s'", tokenErr)
+		}
+
+		redisConn := pool.Get()
+		defer redisConn.Close()
+
+		redisReply, redisError := redis.Bool(redisConn.Do("EXISTS", json.Email))
+		if redisError != nil {
+			log.Print("Error reading redis data '%s'", redisError)
+		}
+		if redisReply == true {
+			c.JSON(http.StatusConflict, gin.H{
+				"status": "user already exists",
+				"email":  json.Email})
+			return
+		}
+
+		_, redisError = redisConn.Do("HMSET", json.Email, "email", json.Email)
+		if redisError != nil {
+			log.Print("Error inserting redis data '%s'", redisError)
 		}
 
 		c.JSON(http.StatusOK, gin.H{
 			"status":    "user registered",
 			"email":     json.Email,
 			"api_token": newToken})
+		return
 	}
 }

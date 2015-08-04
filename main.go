@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// Shamelessly pasted from redigo example code
 func newPool(server, password string) *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     3,
@@ -112,7 +113,7 @@ func testRedis() {
 func createVaultToken(vaultclient *api.Client, email string) (string, error) {
 	err := createVaultPolicy(vaultclient, email)
 	if err != nil {
-		log.Fatal("err: %s", err)
+		log.Print("Error creating vault policy: '%s'", err)
 	}
 	tcr := &api.TokenCreateRequest{
 		Policies:    []string{email},
