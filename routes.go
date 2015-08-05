@@ -59,6 +59,7 @@ func register(c *gin.Context) {
 		// to happen before verification into verification itself
 		// - generating api token
 		// - writing data in redis, determine which data to write?
+		// - Store hash of apitoken instead of actual apitoken, during token verification, check hash
 		_, redisError = redisConn.Do("HMSET", apiToken, "email", json.Email, "valid", false)
 		if redisError != nil {
 			log.Print("Error inserting redis data '%s'", redisError)
@@ -67,6 +68,7 @@ func register(c *gin.Context) {
 
 		verificationToken := uuid.GenerateUUID()
 
+		// TODO Store hash of verification token, check hash during verification
 		_, redisError = redisConn.Do("HMSET", verificationToken, "valid", true, "email", json.Email, "apiToken", apiToken)
 		if redisError != nil {
 			log.Print("Error inserting redis data '%s'", redisError)
