@@ -2,8 +2,10 @@ package main
 
 import (
 	// "encoding/json"
+	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/hashicorp/vault/helper/uuid"
 	"log"
 	"net/http"
 )
@@ -43,23 +45,66 @@ func register(c *gin.Context) {
 			return
 		}
 
-		newToken, tokenErr := createVaultToken(vaultclient, json.Email)
+		apiToken, tokenErr := createVaultToken(vaultclient, json.Email)
 		if tokenErr != nil {
 			log.Print("Error creating vault token '%s'", tokenErr)
+			return
 		}
 
-		_, redisError = redisConn.Do("HMSET", json.Email, "email", json.Email)
+		// TODO Move this part of registration into verification
+		// We don't need to save the apitoken in our database if the email
+		// has not been verified yet
+		// Also make sure to set this to valid: true during verification
+		_, redisError = redisConn.Do("HMSET", apiToken, "email", json.Email, "valid", false)
 		if redisError != nil {
 			log.Print("Error inserting redis data '%s'", redisError)
+			return
 		}
 
+		verificationToken := uuid.GenerateUUID()
+
+		_, redisError = redisConn.Do("HMSET", verificationToken, "valid", true, "email", json.Email, "apiToken", apiToken)
+		if redisError != nil {
+			log.Print("Error inserting redis data '%s'", redisError)
+			return
+		}
+
+		_, redisError = redisConn.Do("SET", json.Email, "true")
+		if redisError != nil {
+			log.Print("Error inserting redis data '%s'", redisError)
+			return
+		}
+
+		go sendVerificationEmail(json.Email, verificationToken)
+
 		c.JSON(http.StatusOK, gin.H{
-			"status":    "user registered",
-			"email":     json.Email,
-			"api_token": newToken})
+			"status":       "user registered",
+			"email":        json.Email,
+			"email_status": "awaiting verification"})
 		return
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": "invalid request json"})
+	}
+}
+
+// GET /verify endpoint
+// This function is used for email verification
+// Where the clickable link provided to the user via email
+// is handled
+func verifyToken(c *gin.Context) {
+	var st StopwatchToken
+	token := c.Param("token")
+	verToken, verTokenError := verifyRegistrationToken(token, &st)
+	if verTokenError == nil {
+		fmt.Sprintf("here we are %s", verToken.Email)
+		go sendTokenEmail(verToken.Email, verToken.ApiToken)
+		c.JSON(http.StatusOK, gin.H{
+			"status":           "email verified",
+			"api_token_status": fmt.Sprintf("email sent to %s", verToken.Email)})
+	} else {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"status": "error verifying email",
+			"error":  fmt.Sprintf("%s", verTokenError)})
 	}
 }
