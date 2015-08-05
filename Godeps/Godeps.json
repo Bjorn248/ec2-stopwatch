@@ -21,12 +21,27 @@
 			"Rev": "70b330b8ac1d096ec2bde4ff892a3c2d9942668f"
 		},
 		{
+			"ImportPath": "github.com/hashicorp/vault/helper/uuid",
+			"Comment": "v0.1.2-400-g70b330b",
+			"Rev": "70b330b8ac1d096ec2bde4ff892a3c2d9942668f"
+		},
+		{
 			"ImportPath": "github.com/manucorporat/sse",
 			"Rev": "fe6ea2c8e398672518ef204bf0fbd9af858d0e15"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-colorable",
 			"Rev": "40e4aedc8fabf8c23e040057540867186712faa5"
+		},
+		{
+			"ImportPath": "github.com/sendgrid/sendgrid-go",
+			"Comment": "v2.0.0-3-g186c04a",
+			"Rev": "186c04acda510e050536deda27d578d80afe775d"
+		},
+		{
+			"ImportPath": "github.com/sendgrid/smtpapi-go",
+			"Comment": "v0.4.0",
+			"Rev": "08102729bcf72bfe74dde6c0da8e0423e94090ca"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
