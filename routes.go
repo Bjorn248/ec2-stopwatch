@@ -55,6 +55,10 @@ func register(c *gin.Context) {
 		// We don't need to save the apitoken in our database if the email
 		// has not been verified yet
 		// Also make sure to set this to valid: true during verification
+		// Actually on second thought, move everything that doesn't need
+		// to happen before verification into verification itself
+		// - generating api token
+		// - writing data in redis, determine which data to write?
 		_, redisError = redisConn.Do("HMSET", apiToken, "email", json.Email, "valid", false)
 		if redisError != nil {
 			log.Print("Error inserting redis data '%s'", redisError)
