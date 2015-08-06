@@ -6,7 +6,6 @@ import (
 	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/vault/helper/uuid"
-	"log"
 	"net/http"
 )
 
@@ -36,7 +35,7 @@ func register(c *gin.Context) {
 
 		redisReply, redisError := redis.Bool(redisConn.Do("EXISTS", json.Email))
 		if redisError != nil {
-			log.Print("Error reading redis data '%s'", redisError)
+			fmt.Sprintf("Error reading redis data '%s'", redisError)
 		}
 		if redisReply == true {
 			c.JSON(http.StatusConflict, gin.H{
@@ -45,48 +44,32 @@ func register(c *gin.Context) {
 			return
 		}
 
-		apiToken, tokenErr := createVaultToken(vaultclient, json.Email)
-		if tokenErr != nil {
-			log.Print("Error creating vault token '%s'", tokenErr)
-			return
-		}
-
-		// TODO Move this part of registration into verification
-		// We don't need to save the apitoken in our database if the email
-		// has not been verified yet
-		// Also make sure to set this to valid: true during verification
-		// Actually on second thought, move everything that doesn't need
-		// to happen before verification into verification itself
-		// - generating api token
-		// - writing data in redis, determine which data to write?
-		// - Store hash of apitoken instead of actual apitoken, during token verification, check hash
-		_, redisError = redisConn.Do("HMSET", apiToken, "email", json.Email, "valid", false)
-		if redisError != nil {
-			log.Print("Error inserting redis data '%s'", redisError)
-			return
-		}
-
 		verificationToken := uuid.GenerateUUID()
+		verificationTokenHash := generateSha256String(verificationToken)
 
-		// TODO Store hash of verification token, check hash during verification
-		_, redisError = redisConn.Do("HMSET", verificationToken, "valid", true, "email", json.Email, "apiToken", apiToken)
+		_, redisError = redisConn.Do("HMSET", verificationTokenHash,
+			"valid", true,
+			"email", json.Email,
+			"tokenType", "verification")
 		if redisError != nil {
-			log.Print("Error inserting redis data '%s'", redisError)
+			fmt.Sprintf("Error inserting redis data '%s'", redisError)
 			return
 		}
 
-		_, redisError = redisConn.Do("SET", json.Email, "true")
+		_, redisError = redisConn.Do("HMSET", json.Email,
+			"verified", false)
 		if redisError != nil {
-			log.Print("Error inserting redis data '%s'", redisError)
+			fmt.Sprintf("Error inserting redis data '%s'", redisError)
 			return
 		}
 
 		go sendVerificationEmail(json.Email, verificationToken)
 
 		c.JSON(http.StatusOK, gin.H{
-			"status":       "user registered",
-			"email":        json.Email,
-			"email_status": "awaiting verification"})
+			"status":                    "user registered",
+			"email":                     json.Email,
+			"email_verification_status": "pending verification",
+			"verified":                  false})
 		return
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -103,10 +86,34 @@ func verifyToken(c *gin.Context) {
 	token := c.Param("token")
 	verToken, verTokenError := verifyRegistrationToken(token, &st)
 	if verTokenError == nil {
-		fmt.Sprintf("here we are %s", verToken.Email)
-		go sendTokenEmail(verToken.Email, verToken.ApiToken)
+		redisConn := pool.Get()
+		defer redisConn.Close()
+		apiToken, tokenErr := createVaultToken(vaultclient, verToken.Email)
+		if tokenErr != nil {
+			fmt.Sprintf("Error creating vault token '%s'", tokenErr)
+			return
+		}
+		apiTokenHash := generateSha256String(apiToken)
+
+		_, redisError := redisConn.Do("HMSET", apiTokenHash,
+			"email", verToken.Email,
+			"valid", true,
+			"tokenType", "api")
+		if redisError != nil {
+			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			return
+		}
+		_, redisError = redisConn.Do("HMSET", verToken.Email,
+			"verified", true)
+		if redisError != nil {
+			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			return
+		}
+
+		go sendTokenEmail(verToken.Email, apiToken)
 		c.JSON(http.StatusOK, gin.H{
 			"status":           "email verified",
+			"verified":         true,
 			"api_token_status": fmt.Sprintf("email sent to %s", verToken.Email)})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{

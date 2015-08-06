@@ -2,6 +2,7 @@ package main
 
 import (
 	// "encoding/json"
+	"crypto/sha256"
 	"errors"
 	"flag"
 	"fmt"
@@ -135,12 +136,13 @@ func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken,
 	invalidToken := errors.New("Invalid Token")
 	redisConn := pool.Get()
 	defer redisConn.Close()
-	verificationToken, redisError := redis.Values(redisConn.Do("HGETALL", token))
+	verificationTokenHash := generateSha256String(token)
+	verificationToken, redisError := redis.Values(redisConn.Do("HGETALL", verificationTokenHash))
 	if redisError != nil {
 		fmt.Printf("Error when looking up verification token: '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
-	_, redisError = redisConn.Do("HMSET", token, "valid", "false", "apiToken", "")
+	_, redisError = redisConn.Do("HMSET", verificationTokenHash, "valid", "false")
 	if redisError != nil {
 		fmt.Printf("Error inserting redis data '%s'", redisError)
 		return &StopwatchToken{}, redisError
@@ -183,6 +185,11 @@ func sendTokenEmail(email, token string) {
 		log.Print("Error sending email: '%s'", r)
 		return
 	}
+}
+
+func generateSha256String(plaintext string) string {
+	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(plaintext)))
+	return hash
 }
 
 func typeof(v interface{}) string {
