@@ -25,7 +25,8 @@ func getUser(c *gin.Context) {
 }
 
 // POST /register endpoint
-// the register function takes an email as the only input parameter and generates a UUID that it returns to the user
+// the register function takes an email as the only input parameter and generates
+// a UUID that it returns to the user
 func register(c *gin.Context) {
 	var json registration
 
@@ -48,7 +49,6 @@ func register(c *gin.Context) {
 		verificationTokenHash := generateSha256String(verificationToken)
 
 		_, redisError = redisConn.Do("HMSET", verificationTokenHash,
-			"valid", true,
 			"email", json.Email,
 			"tokenType", "verification")
 		if redisError != nil {
@@ -97,7 +97,6 @@ func verifyToken(c *gin.Context) {
 
 		_, redisError := redisConn.Do("HMSET", apiTokenHash,
 			"email", verToken.Email,
-			"valid", true,
 			"tokenType", "api")
 		if redisError != nil {
 			fmt.Sprintf("Error inserting redis data '%s'", redisError)

@@ -53,9 +53,8 @@ var (
 )
 
 type StopwatchToken struct {
-	Valid    bool   `redis:"valid"`
-	Email    string `redis:"email"`
-	ApiToken string `redis:"apiToken"`
+	Email     string `redis:"email"`
+	TokenType string `redis:"tokenType"`
 }
 
 func main() {
@@ -139,18 +138,22 @@ func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken,
 	verificationTokenHash := generateSha256String(token)
 	verificationToken, redisError := redis.Values(redisConn.Do("HGETALL", verificationTokenHash))
 	if redisError != nil {
-		fmt.Printf("Error when looking up verification token: '%s'", redisError)
+		fmt.Sprintf("Error when looking up verification token: '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
-	_, redisError = redisConn.Do("HMSET", verificationTokenHash, "valid", false)
+
+	if len(verificationToken) == 0 {
+		return &StopwatchToken{}, invalidToken
+	}
+	_, redisError = redisConn.Do("DEL", verificationTokenHash)
 	if redisError != nil {
-		fmt.Printf("Error inserting redis data '%s'", redisError)
+		fmt.Sprintf("Error deleting redis data '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
 	if err := redis.ScanStruct(verificationToken, st); err != nil {
 		return &StopwatchToken{}, err
 	}
-	if st.Valid == true {
+	if st.TokenType == "verification" {
 		return st, nil
 	} else {
 		return &StopwatchToken{}, invalidToken
@@ -162,7 +165,7 @@ func sendVerificationEmail(email, token string) {
 	message := sendgrid.NewMail()
 	message.AddTo(email)
 	message.SetSubject("Please Verify your Email for EC2 Stopwatch")
-	message.SetHTML(fmt.Sprintf("Please click the following link to verify your account.<br><br><a href='%s/verify/%s'>%s/verify/%s</a>", os.Getenv("STOPWATCH_URL"), token, os.Getenv("STOPWATCH_URL"), token))
+	message.SetHTML(fmt.Sprintf("Please click the following link to verify your account. After you verify your email, you will recieve another email containing your Stopwatch API Token.<br><br><a href='%s/verify/%s'>%s/verify/%s</a>", os.Getenv("STOPWATCH_URL"), token, os.Getenv("STOPWATCH_URL"), token))
 	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
 	r := sg.Send(message)
 	if r != nil {
