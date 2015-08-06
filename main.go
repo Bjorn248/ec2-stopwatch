@@ -162,9 +162,7 @@ func sendVerificationEmail(email, token string) {
 	message := sendgrid.NewMail()
 	message.AddTo(email)
 	message.SetSubject("Please Verify your Email for EC2 Stopwatch")
-	// TODO Format this email a bit more
-	// message.SetText("Please click the following link to verify your account.")
-	message.SetHTML(fmt.Sprintf("<a href='%s/verify/%s'>%s/verify/%s</a>", os.Getenv("STOPWATCH_URL"), token, os.Getenv("STOPWATCH_URL"), token))
+	message.SetHTML(fmt.Sprintf("Please click the following link to verify your account.<br><br><a href='%s/verify/%s'>%s/verify/%s</a>", os.Getenv("STOPWATCH_URL"), token, os.Getenv("STOPWATCH_URL"), token))
 	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
 	r := sg.Send(message)
 	if r != nil {
@@ -178,7 +176,7 @@ func sendTokenEmail(email, token string) {
 	message := sendgrid.NewMail()
 	message.AddTo(email)
 	message.SetSubject("Your EC2 Stopwatch API Token")
-	message.SetText(fmt.Sprintf("Your API Token is %s", token))
+	message.SetHTML(fmt.Sprintf("Your API Token is %s<br>Keep it secret. Keep it safe.", token))
 	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
 	r := sg.Send(message)
 	if r != nil {
