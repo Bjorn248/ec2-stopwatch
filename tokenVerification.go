@@ -6,6 +6,11 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
+type StopwatchToken struct {
+	Email     string `redis:"email"`
+	TokenType string `redis:"tokenType"`
+}
+
 func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken, error) {
 	invalidToken := errors.New("Invalid Token")
 	redisConn := pool.Get()

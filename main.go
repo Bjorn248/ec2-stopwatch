@@ -8,11 +8,6 @@ import (
 	"os"
 )
 
-type StopwatchToken struct {
-	Email     string `redis:"email"`
-	TokenType string `redis:"tokenType"`
-}
-
 func main() {
 
 	// Check Environment Variables
@@ -57,7 +52,13 @@ func main() {
 	// Instantiate Gin Router
 	router := gin.Default()
 
-	router.GET("/user", getUser)
+	private := router.Group("/private")
+
+	private.Use(AuthRequired())
+	{
+		private.GET("/user", getUser)
+	}
+
 	router.POST("/register", register)
 	router.GET("/verify/:token", verifyToken)
 
