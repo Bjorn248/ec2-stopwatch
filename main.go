@@ -142,7 +142,7 @@ func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken,
 		fmt.Printf("Error when looking up verification token: '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
-	_, redisError = redisConn.Do("HMSET", verificationTokenHash, "valid", "false")
+	_, redisError = redisConn.Do("HMSET", verificationTokenHash, "valid", false)
 	if redisError != nil {
 		fmt.Printf("Error inserting redis data '%s'", redisError)
 		return &StopwatchToken{}, redisError
