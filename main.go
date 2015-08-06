@@ -1,55 +1,11 @@
 package main
 
 import (
-	// "encoding/json"
-	"crypto/sha256"
-	"errors"
 	"flag"
-	"fmt"
-	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/vault/api"
-	"github.com/sendgrid/sendgrid-go"
 	"log"
 	"os"
-	"time"
-)
-
-// Shamelessly pasted from redigo example code
-func newPool(server, password string) *redis.Pool {
-	return &redis.Pool{
-		MaxIdle:     3,
-		IdleTimeout: 240 * time.Second,
-		Dial: func() (redis.Conn, error) {
-			c, err := redis.Dial("tcp", server)
-			if err != nil {
-				return nil, err
-			}
-			if _, err := c.Do("AUTH", password); err != nil {
-				c.Close()
-				return nil, err
-			}
-			return c, err
-		},
-		TestOnBorrow: func(c redis.Conn, t time.Time) error {
-			_, err := c.Do("PING")
-			return err
-		},
-	}
-}
-
-// Declare redis connection variables
-var (
-	pool          *redis.Pool
-	redisServer   = flag.String("redisServer", ":6379", "")
-	redisPassword = flag.String("redisPassword", os.Getenv("REDIS_PASSWORD"), "")
-)
-
-// Declare Vault Connection Variables
-var (
-	vaultconfig *api.Config
-	vaultclient *api.Client
-	vaulterror  error
 )
 
 type StopwatchToken struct {
@@ -107,92 +63,4 @@ func main() {
 
 	// Listen on port 4000
 	router.Run(":4000")
-}
-
-func createVaultToken(vaultclient *api.Client, email string) (string, error) {
-	err := createVaultPolicy(vaultclient, email)
-	if err != nil {
-		log.Print("Error creating vault policy: '%s'", err)
-	}
-	tcr := &api.TokenCreateRequest{
-		Policies:    []string{email},
-		DisplayName: email}
-	ta := vaultclient.Auth().Token()
-	s, err := ta.Create(tcr)
-	if err != nil {
-		return "", err
-	}
-	return s.Auth.ClientToken, nil
-}
-
-func createVaultPolicy(vaultclient *api.Client, email string) error {
-	sys := vaultclient.Sys()
-	rules := fmt.Sprintf("path \"secret/%s/*\" {\n  policy = \"write\"\n}", email)
-	return sys.PutPolicy(email, rules)
-}
-
-func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken, error) {
-	invalidToken := errors.New("Invalid Token")
-	redisConn := pool.Get()
-	defer redisConn.Close()
-	verificationTokenHash := generateSha256String(token)
-	verificationToken, redisError := redis.Values(redisConn.Do("HGETALL", verificationTokenHash))
-	if redisError != nil {
-		fmt.Sprintf("Error when looking up verification token: '%s'", redisError)
-		return &StopwatchToken{}, redisError
-	}
-
-	if len(verificationToken) == 0 {
-		return &StopwatchToken{}, invalidToken
-	}
-	_, redisError = redisConn.Do("DEL", verificationTokenHash)
-	if redisError != nil {
-		fmt.Sprintf("Error deleting redis data '%s'", redisError)
-		return &StopwatchToken{}, redisError
-	}
-	if err := redis.ScanStruct(verificationToken, st); err != nil {
-		return &StopwatchToken{}, err
-	}
-	if st.TokenType == "verification" {
-		return st, nil
-	} else {
-		return &StopwatchToken{}, invalidToken
-	}
-}
-
-func sendVerificationEmail(email, token string) {
-	sg := sendgrid.NewSendGridClientWithApiKey(os.Getenv("SENDGRID_API_TOKEN"))
-	message := sendgrid.NewMail()
-	message.AddTo(email)
-	message.SetSubject("Please Verify your Email for EC2 Stopwatch")
-	message.SetHTML(fmt.Sprintf("Please click the following link to verify your account. After you verify your email, you will recieve another email containing your Stopwatch API Token.<br><br><a href='%s/verify/%s'>%s/verify/%s</a>", os.Getenv("STOPWATCH_URL"), token, os.Getenv("STOPWATCH_URL"), token))
-	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
-	r := sg.Send(message)
-	if r != nil {
-		log.Print("Error sending email: '%s'", r)
-		return
-	}
-}
-
-func sendTokenEmail(email, token string) {
-	sg := sendgrid.NewSendGridClientWithApiKey(os.Getenv("SENDGRID_API_TOKEN"))
-	message := sendgrid.NewMail()
-	message.AddTo(email)
-	message.SetSubject("Your EC2 Stopwatch API Token")
-	message.SetHTML(fmt.Sprintf("Your API Token is %s<br>Keep it secret. Keep it safe.", token))
-	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
-	r := sg.Send(message)
-	if r != nil {
-		log.Print("Error sending email: '%s'", r)
-		return
-	}
-}
-
-func generateSha256String(plaintext string) string {
-	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(plaintext)))
-	return hash
-}
-
-func typeof(v interface{}) string {
-	return fmt.Sprintf("%T", v)
 }
