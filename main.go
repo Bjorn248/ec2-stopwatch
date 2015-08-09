@@ -57,6 +57,7 @@ func main() {
 	private.Use(AuthRequired())
 	{
 		private.GET("/user", getUser)
+		private.POST("/aws/secrets", awsSecrets)
 	}
 
 	router.POST("/register", register)
