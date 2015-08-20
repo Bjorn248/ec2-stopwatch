@@ -58,6 +58,7 @@ func main() {
 	{
 		private.GET("/user", getUser)
 		private.POST("/aws/secrets", awsSecrets)
+		private.POST("/aws/schedule", awsSchedule)
 	}
 
 	router.POST("/register", register)

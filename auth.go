@@ -30,7 +30,15 @@ func AuthRequired() gin.HandlerFunc {
 		if err := redis.ScanStruct(apiToken, stPointer); err != nil {
 			return
 		}
-		c.Set("SwToken", StopwatchToken{stPointer.Email, stPointer.TokenType})
+
+		if stPointer.TokenType == "api" {
+			c.Set("SwToken", StopwatchToken{stPointer.Email, stPointer.TokenType})
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "invalid api token"})
+			c.Abort()
+			return
+		}
 	}
 }
 

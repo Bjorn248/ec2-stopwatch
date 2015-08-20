@@ -175,3 +175,9 @@ func awsSecrets(c *gin.Context) {
 			"status": "invalid request json"})
 	}
 }
+
+// POST /private/aws/schedule
+// This takes the start, end, and expiration (optional)
+// times of an ec2 instance, lots of TODO here
+func awsSchedule(c *gin.Context) {
+}
