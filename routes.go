@@ -10,12 +10,27 @@ import (
 )
 
 type user struct {
-	Email string `form:"email" json:"email" binding:"required"`
+	Email string `json:"email" binding:"required"`
 }
 
 type awsSec struct {
-	AccessKeyID string `form:"access_key_id" json:"access_key_id" binding:"required"`
-	SecretKeyID string `form:"secret_key_id" json:"secret_key_id" binding:"required"`
+	AccessKeyID string `json:"access_key_id" binding:"required"`
+	SecretKeyID string `json:"secret_key_id" binding:"required"`
+}
+
+type ScheduleRequest struct {
+	InstanceID     string   `json:"instance_id" binding:"required"`
+	StartSchedule  schedule `json:"start" binding:"required"`
+	EndSchedule    schedule `json:"end"`
+	ExpirationDate int      `json:"expiration"`
+}
+
+type schedule struct {
+	Minute     string `json:"minute" binding:"required"`
+	Hour       string `json:"hour" binding:"required"`
+	DayOfMonth string `json:"day_of_month" binding:"required"`
+	Month      string `json:"month" binding:"required"`
+	DayOfWeek  string `json:"day_of_week" binding:"required"`
 }
 
 // GET /private/user endpoint
