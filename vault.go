@@ -15,7 +15,7 @@ var (
 func createVaultToken(vaultclient *api.Client, email string) (string, error) {
 	err := createVaultPolicy(vaultclient, email)
 	if err != nil {
-		fmt.Sprintf("Error creating vault policy: '%s'", err)
+		fmt.Printf("Error creating vault policy: '%s'", err)
 	}
 	tcr := &api.TokenCreateRequest{
 		Policies:    []string{email},

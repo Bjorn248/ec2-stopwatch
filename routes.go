@@ -60,7 +60,9 @@ func register(c *gin.Context) {
 
 		redisReply, redisError := redis.Bool(redisConn.Do("EXISTS", json.Email))
 		if redisError != nil {
-			fmt.Sprintf("Error reading redis data '%s'", redisError)
+			fmt.Printf("Error reading redis data '%s'", redisError)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error reading redis data"})
 		}
 		if redisReply == true {
 			c.JSON(http.StatusConflict, gin.H{
@@ -76,14 +78,18 @@ func register(c *gin.Context) {
 			"email", json.Email,
 			"tokenType", "verification")
 		if redisError != nil {
-			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			fmt.Printf("Error inserting redis data '%s'", redisError)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error inserting redis data"})
 			return
 		}
 
 		_, redisError = redisConn.Do("HMSET", json.Email,
 			"verified", false)
 		if redisError != nil {
-			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			fmt.Printf("Error inserting redis data '%s'", redisError)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error inserting redis data"})
 			return
 		}
 
@@ -113,7 +119,9 @@ func verifyToken(c *gin.Context) {
 		defer redisConn.Close()
 		apiToken, tokenErr := createVaultToken(vaultclient, verToken.Email)
 		if tokenErr != nil {
-			fmt.Sprintf("Error creating vault token '%s'", tokenErr)
+			fmt.Printf("Error creating vault token '%s'", tokenErr)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error creating vault token"})
 			return
 		}
 		apiTokenHash := generateSha256String(apiToken)
@@ -122,13 +130,17 @@ func verifyToken(c *gin.Context) {
 			"email", verToken.Email,
 			"tokenType", "api")
 		if redisError != nil {
-			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			fmt.Printf("Error inserting redis data '%s'", redisError)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error inserting redis data"})
 			return
 		}
 		_, redisError = redisConn.Do("HMSET", verToken.Email,
 			"verified", true)
 		if redisError != nil {
-			fmt.Sprintf("Error inserting redis data '%s'", redisError)
+			fmt.Printf("Error inserting redis data '%s'", redisError)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "Error inserting redis data"})
 			return
 		}
 
@@ -157,7 +169,10 @@ func awsSecrets(c *gin.Context) {
 			vconfig := api.DefaultConfig()
 			vclient, verr := api.NewClient(vconfig)
 			if verr != nil {
-				fmt.Sprintf("Problem creating vault client, '%s'", verr)
+				fmt.Printf("Problem creating vault client, '%s'", verr)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error connecting to vault"})
+				return
 			}
 
 			vclient.SetToken(APIToken)
@@ -165,14 +180,19 @@ func awsSecrets(c *gin.Context) {
 			// Check Vault Connection
 			_, authError := vclient.Logical().Read("auth/token/lookup-self")
 			if authError != nil {
-				fmt.Sprintf("Something went wrong connecting to Vault! Error is '%s'", authError)
+				fmt.Printf("Something went wrong connecting to Vault! Error is '%s'", authError)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Something went wrong connecting to vault"})
+				return
 			}
 
 			path := fmt.Sprintf("secret/%s/aws/%s", SwToken.Email, json.AccessKeyID)
 
 			_, err := vclient.Logical().Write(path, map[string]interface{}{"secret_key": json.SecretKeyID})
 			if err != nil {
-				fmt.Sprintf("error writing %s: %s", path, err)
+				fmt.Printf("error writing %s: %s", path, err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error writing secrets to vault"})
 			} else {
 				c.JSON(http.StatusOK, gin.H{
 					"status": "secrets written"})
