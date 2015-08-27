@@ -20,6 +20,7 @@ type awsSec struct {
 
 type ScheduleRequest struct {
 	InstanceID     string   `json:"instance_id" binding:"required"`
+	AccessKeyID    string   `json:"access_key_id" binding:"required"`
 	StartSchedule  schedule `json:"start" binding:"required"`
 	EndSchedule    schedule `json:"end"`
 	ExpirationDate int      `json:"expiration"`
@@ -196,7 +197,7 @@ func awsSecrets(c *gin.Context) {
 			} else {
 				c.JSON(http.StatusOK, gin.H{
 					"status": "secrets written"})
-				fmt.Printf("wrote %s successfully", path)
+				fmt.Printf("wrote %s successfully\n", path)
 			}
 
 		} else {
@@ -214,5 +215,61 @@ func awsSecrets(c *gin.Context) {
 // POST /private/aws/schedule
 // This takes the start, end, and expiration (optional)
 // times of an ec2 instance, lots of TODO here
+// Made some progress here but this is incomplete
+// More TODO
 func awsSchedule(c *gin.Context) {
+	var json ScheduleRequest
+
+	if c.BindJSON(&json) == nil {
+
+		if SwTokenInterface, exists := c.Get("SwToken"); exists {
+			SwToken := SwTokenInterface.(StopwatchToken)
+			APIToken := GetStopwatchAPIToken(c)
+
+			vconfig := api.DefaultConfig()
+			vclient, verr := api.NewClient(vconfig)
+			if verr != nil {
+				fmt.Printf("Problem creating vault client, '%s'", verr)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error connecting to vault"})
+				return
+			}
+
+			vclient.SetToken(APIToken)
+
+			// Check Vault Connection
+			_, authError := vclient.Logical().Read("auth/token/lookup-self")
+			if authError != nil {
+				fmt.Printf("Something went wrong connecting to Vault! Error is '%s'", authError)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Something went wrong connecting to vault"})
+				return
+			}
+
+			path := fmt.Sprintf("secret/%s/aws/%s", SwToken.Email, json.AccessKeyID)
+
+			secret, err := vclient.Logical().Read(path)
+			if err != nil {
+				fmt.Printf("error reading %s: %s", path, err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error reading secrets from vault"})
+			}
+
+			awsSecret := secret.Data["secret_key"]
+			fmt.Println(awsSecret)
+
+			c.JSON(http.StatusOK, gin.H{
+				"status": "making progress"})
+
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":     "problem verifying api token",
+				"suggestion": "server load might be high right now, please try later"})
+		}
+
+	} else {
+		fmt.Println(c.BindJSON(&json))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "invalid request json"})
+	}
 }
