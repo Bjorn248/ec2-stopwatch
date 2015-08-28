@@ -15,7 +15,7 @@ func sendVerificationEmail(email, token string) {
 	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
 	r := sg.Send(message)
 	if r != nil {
-		fmt.Sprintf("Error sending email: '%s'", r)
+		fmt.Printf("Error sending email: '%s'", r)
 		return
 	}
 }
@@ -29,7 +29,7 @@ func sendTokenEmail(email, token string) {
 	message.SetFrom(os.Getenv("EMAIL_FROM_ADDRESS"))
 	r := sg.Send(message)
 	if r != nil {
-		fmt.Sprintf("Error sending email: '%s'", r)
+		fmt.Printf("Error sending email: '%s'", r)
 		return
 	}
 }

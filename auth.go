@@ -17,7 +17,7 @@ func AuthRequired() gin.HandlerFunc {
 		apiTokenHash := generateSha256String(token)
 		apiToken, redisError := redis.Values(redisConn.Do("HGETALL", apiTokenHash))
 		if redisError != nil {
-			fmt.Sprintf("Error when looking up apiToken token: '%s'", redisError)
+			fmt.Printf("Error when looking up apiToken token: '%s'", redisError)
 			return
 		}
 		if len(apiToken) == 0 {

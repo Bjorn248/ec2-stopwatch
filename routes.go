@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-type user struct {
+type RegistrationUser struct {
 	Email string `json:"email" binding:"required"`
 }
 
@@ -34,6 +34,9 @@ type schedule struct {
 	DayOfWeek  string `json:"day_of_week" binding:"required"`
 }
 
+type User struct {
+}
+
 // GET /private/user endpoint
 // This function returns the user object of the user
 // making the request
@@ -53,7 +56,7 @@ func getUser(c *gin.Context) {
 // the register function takes an email as the only input parameter and generates
 // a UUID that it returns to the user
 func register(c *gin.Context) {
-	var json user
+	var json RegistrationUser
 
 	if c.BindJSON(&json) == nil {
 		redisConn := pool.Get()
@@ -225,6 +228,8 @@ func awsSchedule(c *gin.Context) {
 		if SwTokenInterface, exists := c.Get("SwToken"); exists {
 			SwToken := SwTokenInterface.(StopwatchToken)
 			APIToken := GetStopwatchAPIToken(c)
+			redisConn := pool.Get()
+			defer redisConn.Close()
 
 			vconfig := api.DefaultConfig()
 			vclient, verr := api.NewClient(vconfig)
@@ -258,6 +263,23 @@ func awsSchedule(c *gin.Context) {
 			awsSecret := secret.Data["secret_key"]
 			fmt.Println(awsSecret)
 
+			User, redisError := redis.StringMap(redisConn.Do("HGETALL", SwToken.Email))
+			if redisError != nil {
+				fmt.Printf("Error when looking up email: '%s'", redisError)
+				return
+			}
+
+			fmt.Println(User)
+
+			// User["aws"][json.AccessKeyID][json.InstanceID]["start"] = json.StartSchedule
+			// if json.EndSchedule != nil {
+			// 	User["aws"][json.AccessKeyID][json.InstanceID]["end"] = json.EndSchedule
+			// }
+			// if json.ExpirationDate != nil {
+			// 	User["aws"][json.AccessKeyID][json.InstanceID]["expiration"] = json.ExpirationDate
+			// }
+
+			// fmt.Println(User)
 			c.JSON(http.StatusOK, gin.H{
 				"status": "making progress"})
 

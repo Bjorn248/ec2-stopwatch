@@ -18,7 +18,7 @@ func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken,
 	verificationTokenHash := generateSha256String(token)
 	verificationToken, redisError := redis.Values(redisConn.Do("HGETALL", verificationTokenHash))
 	if redisError != nil {
-		fmt.Sprintf("Error when looking up verification token: '%s'", redisError)
+		fmt.Printf("Error when looking up verification token: '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
 
@@ -27,7 +27,7 @@ func verifyRegistrationToken(token string, st *StopwatchToken) (*StopwatchToken,
 	}
 	_, redisError = redisConn.Do("DEL", verificationTokenHash)
 	if redisError != nil {
-		fmt.Sprintf("Error deleting redis data '%s'", redisError)
+		fmt.Printf("Error deleting redis data '%s'", redisError)
 		return &StopwatchToken{}, redisError
 	}
 	if err := redis.ScanStruct(verificationToken, st); err != nil {
