@@ -271,6 +271,9 @@ func awsSchedule(c *gin.Context) {
 
 			fmt.Println(User)
 
+			// TODO Implement json in redis storage
+			// Perhaps the best thing to do would be to store a raw json string in redis
+
 			// User["aws"][json.AccessKeyID][json.InstanceID]["start"] = json.StartSchedule
 			// if json.EndSchedule != nil {
 			// 	User["aws"][json.AccessKeyID][json.InstanceID]["end"] = json.EndSchedule
