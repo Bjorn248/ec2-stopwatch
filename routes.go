@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
@@ -34,7 +35,10 @@ type schedule struct {
 	DayOfWeek  string `json:"day_of_week" binding:"required"`
 }
 
+// TODO Make this work with the user object stored in redis
+// It does not currently
 type User struct {
+	aws map[string]map[string]map[string]*schedule
 }
 
 // GET /private/user endpoint
@@ -88,8 +92,8 @@ func register(c *gin.Context) {
 			return
 		}
 
-		_, redisError = redisConn.Do("HMSET", json.Email,
-			"verified", false)
+		_, redisError = redisConn.Do("SET", json.Email,
+			`{ "verified": false }`)
 		if redisError != nil {
 			fmt.Printf("Error inserting redis data '%s'", redisError)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -139,8 +143,14 @@ func verifyToken(c *gin.Context) {
 				"status": "Error inserting redis data"})
 			return
 		}
-		_, redisError = redisConn.Do("HMSET", verToken.Email,
-			"verified", true)
+		_, redisError = redisConn.Do("SET", verToken.Email,
+			`{
+				"verified": true,
+				"aws": {},
+				"joyent": {},
+				"azure": {},
+				"google": {}
+			}`)
 		if redisError != nil {
 			fmt.Printf("Error inserting redis data '%s'", redisError)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -221,9 +231,9 @@ func awsSecrets(c *gin.Context) {
 // Made some progress here but this is incomplete
 // More TODO
 func awsSchedule(c *gin.Context) {
-	var json ScheduleRequest
+	var jsonRequestData ScheduleRequest
 
-	if c.BindJSON(&json) == nil {
+	if c.BindJSON(&jsonRequestData) == nil {
 
 		if SwTokenInterface, exists := c.Get("SwToken"); exists {
 			SwToken := SwTokenInterface.(StopwatchToken)
@@ -251,7 +261,7 @@ func awsSchedule(c *gin.Context) {
 				return
 			}
 
-			path := fmt.Sprintf("secret/%s/aws/%s", SwToken.Email, json.AccessKeyID)
+			path := fmt.Sprintf("secret/%s/aws/%s", SwToken.Email, jsonRequestData.AccessKeyID)
 
 			secret, err := vclient.Logical().Read(path)
 			if err != nil {
@@ -263,26 +273,58 @@ func awsSchedule(c *gin.Context) {
 			awsSecret := secret.Data["secret_key"]
 			fmt.Println(awsSecret)
 
-			User, redisError := redis.StringMap(redisConn.Do("HGETALL", SwToken.Email))
+			UserFromRedis, redisError := redis.String(redisConn.Do("GET", SwToken.Email))
 			if redisError != nil {
 				fmt.Printf("Error when looking up email: '%s'", redisError)
 				return
 			}
 
-			fmt.Println(User)
+			var jsonData map[string]interface{}
 
-			// TODO Implement json in redis storage
-			// Perhaps the best thing to do would be to store a raw json string in redis
+			if err := json.Unmarshal([]byte(UserFromRedis), &jsonData); err != nil {
+				fmt.Println(err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error reading secrets from vault"})
+				return
+			}
 
-			// User["aws"][json.AccessKeyID][json.InstanceID]["start"] = json.StartSchedule
-			// if json.EndSchedule != nil {
-			// 	User["aws"][json.AccessKeyID][json.InstanceID]["end"] = json.EndSchedule
-			// }
-			// if json.ExpirationDate != nil {
-			// 	User["aws"][json.AccessKeyID][json.InstanceID]["expiration"] = json.ExpirationDate
-			// }
+			// TODO Get below code working with User struct instead of type-casting the interface{}
+			//			user := &User{}
+			//
+			//			if err := json.Unmarshal([]byte(UserFromRedis), user); err != nil {
+			//				fmt.Println(err)
+			//				c.JSON(http.StatusInternalServerError, gin.H{
+			//					"status": "Error reading secrets from vault"})
+			//				return
+			//			}
+			//
+			//			fmt.Printf("%+v\n", user)
+			//			fmt.Printf("%#v\n", user)
+			// fmt.Println(user.aws["PLACEHOLDER"]["PLACEHOLDER"].start)
+			jsonData["aws"].(map[string]interface{})[jsonRequestData.AccessKeyID] = map[string]map[string]schedule{
+				jsonRequestData.InstanceID: map[string]schedule{
+					"start": jsonRequestData.StartSchedule,
+				},
+			}
 
-			// fmt.Println(User)
+			jsonMarshaled, jsonError := json.Marshal(jsonData)
+			if jsonError != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error reading secrets from vault"})
+				return
+			}
+
+			fmt.Println(string(jsonMarshaled))
+
+			_, redisError = redisConn.Do("SET", SwToken.Email, string(jsonMarshaled))
+			if redisError != nil {
+				fmt.Printf("Error inserting redis data '%s'", redisError)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error inserting redis data"})
+				return
+			}
+
+			// fmt.Println(Userfromredis)
 			c.JSON(http.StatusOK, gin.H{
 				"status": "making progress"})
 
@@ -293,7 +335,7 @@ func awsSchedule(c *gin.Context) {
 		}
 
 	} else {
-		fmt.Println(c.BindJSON(&json))
+		fmt.Println(c.BindJSON(&jsonRequestData))
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": "invalid request json"})
 	}
