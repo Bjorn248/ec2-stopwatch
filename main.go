@@ -59,6 +59,7 @@ func main() {
 		private.GET("/user", getUser)
 		private.POST("/aws/secrets", awsSecrets)
 		private.POST("/aws/schedule", awsSchedule)
+		// TODO Write DELETE Method for aws schedule
 	}
 
 	router.POST("/register", register)

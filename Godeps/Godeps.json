@@ -1,7 +1,47 @@
 {
 	"ImportPath": "github.com/Bjorn248/ec2-stopwatch",
-	"GoVersion": "go1.4.2",
+	"GoVersion": "go1.5",
 	"Deps": [
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/aws",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/endpoints",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/ec2query",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query/queryutil",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/rest",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/xml/xmlutil",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/signer/v4",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/service/ec2",
+			"Comment": "v0.9.4rc5-2-g18ac217",
+			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+		},
 		{
 			"ImportPath": "github.com/garyburd/redigo/internal",
 			"Rev": "a47585eaae68b1d14b02940d2af1b9194f3caa9c"
@@ -14,6 +54,14 @@
 			"ImportPath": "github.com/gin-gonic/gin",
 			"Comment": "v1.0rc1-136-gfd5d429",
 			"Rev": "fd5d4294a5d5223d55fc76d7840f4b0ad91647bb"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/go-multierror",
+			"Rev": "56912fb08d85084aa318edcf2bba735b97cf35c5"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/hcl",
+			"Rev": "54864211433d45cb780682431585b3e573b49e4a"
 		},
 		{
 			"ImportPath": "github.com/hashicorp/vault/api",
@@ -34,6 +82,10 @@
 			"Rev": "40e4aedc8fabf8c23e040057540867186712faa5"
 		},
 		{
+			"ImportPath": "github.com/mitchellh/mapstructure",
+			"Rev": "281073eb9eb092240d33ef253c404f1cca550309"
+		},
+		{
 			"ImportPath": "github.com/sendgrid/sendgrid-go",
 			"Comment": "v2.0.0-3-g186c04a",
 			"Rev": "186c04acda510e050536deda27d578d80afe775d"
@@ -42,6 +94,10 @@
 			"ImportPath": "github.com/sendgrid/smtpapi-go",
 			"Comment": "v0.4.0",
 			"Rev": "08102729bcf72bfe74dde6c0da8e0423e94090ca"
+		},
+		{
+			"ImportPath": "github.com/vaughan0/go-ini",
+			"Rev": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

@@ -20,10 +20,11 @@ type awsSec struct {
 }
 
 type ScheduleRequest struct {
+	Region         string   `json:"region" binding:"required,eq=ap-northeast-1|eq=us-east-1|eq=us-west-1|eq=us-west-2|eq=eu-west-1|eq=eu-central-1|eq=ap-southeast-1|eq=ap-southeast-2|eq=sa-east-1"`
 	InstanceID     string   `json:"instance_id" binding:"required"`
 	AccessKeyID    string   `json:"access_key_id" binding:"required"`
 	StartSchedule  schedule `json:"start" binding:"required"`
-	EndSchedule    schedule `json:"end"`
+	EndSchedule    schedule `json:"end" binding:"required"`
 	ExpirationDate int      `json:"expiration"`
 }
 
@@ -284,7 +285,7 @@ func awsSchedule(c *gin.Context) {
 			if err := json.Unmarshal([]byte(UserFromRedis), &jsonData); err != nil {
 				fmt.Println(err)
 				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "Error reading secrets from vault"})
+					"status": "Error parsing json from redis"})
 				return
 			}
 
@@ -304,18 +305,42 @@ func awsSchedule(c *gin.Context) {
 			jsonData["aws"].(map[string]interface{})[jsonRequestData.AccessKeyID] = map[string]map[string]schedule{
 				jsonRequestData.InstanceID: map[string]schedule{
 					"start": jsonRequestData.StartSchedule,
+					"stop":  jsonRequestData.EndSchedule,
 				},
 			}
 
+			// JSON back to string after adding schedules
 			jsonMarshaled, jsonError := json.Marshal(jsonData)
 			if jsonError != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "Error reading secrets from vault"})
+					"status": "Error parsing json"})
 				return
 			}
 
+			// Back to map to add region
+			if err := json.Unmarshal(jsonMarshaled, &jsonData); err != nil {
+				fmt.Println(err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error parsing json"})
+				return
+			}
+
+			// Add Region
+			jsonData["aws"].(map[string]interface{})[jsonRequestData.AccessKeyID].(map[string]interface{})[jsonRequestData.InstanceID].(map[string]interface{})["region"] = jsonRequestData.Region
+
+			// Back to string
+			jsonMarshaled, jsonError = json.Marshal(jsonData)
+			if jsonError != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status": "Error parsing json"})
+				return
+			}
+
+			// TODO Add expiration, or create separate function to handle expiration
+
 			fmt.Println(string(jsonMarshaled))
 
+			// Write json back to redis
 			_, redisError = redisConn.Do("SET", SwToken.Email, string(jsonMarshaled))
 			if redisError != nil {
 				fmt.Printf("Error inserting redis data '%s'", redisError)
@@ -324,7 +349,15 @@ func awsSchedule(c *gin.Context) {
 				return
 			}
 
-			// fmt.Println(Userfromredis)
+			// TODO Below is working POC code for starting an instance, need to move everything to cron
+			// response, err := startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
+			// if err != nil {
+			// 	fmt.Println(err)
+			// 	c.JSON(http.StatusInternalServerError, gin.H{
+			// 		"status": "Error starting ec2 instance"})
+			// 	return
+			// }
+
 			c.JSON(http.StatusOK, gin.H{
 				"status": "making progress"})
 
