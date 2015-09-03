@@ -47,13 +47,13 @@ String - AWS EC2 Instance ID - InstanceID
 String - AWS Region - Region
 
 Returns
-TODO Determine return values
+TODO Determine proper return values
 */
-func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (string, error) {
+func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (*ec2.StartInstancesOutput, error) {
 	// Ensure that region is valid
 	_, ok := regions[Region]
 	if ok == false {
-		return "", invalidRegionError
+		return &ec2.StartInstancesOutput{}, invalidRegionError
 	}
 
 	// Initialize AWS Credentials
@@ -73,17 +73,17 @@ func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Re
 		// Print the error, cast err to awserr.Error to get the Code and
 		// Message from an error.
 		fmt.Println(err.Error())
-		return "", err
+		return &ec2.StartInstancesOutput{}, err
 	}
 
-	return "", nil
+	return resp, nil
 }
 
-func stopInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (string, error) {
+func stopInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (*ec2.StopInstancesOutput, error) {
 	// Ensure that region is valid
 	_, ok := regions[Region]
 	if ok == false {
-		return "", invalidRegionError
+		return &ec2.StopInstancesOutput{}, invalidRegionError
 	}
 
 	// Initialize AWS Credentials
@@ -103,8 +103,8 @@ func stopInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Reg
 		// Print the error, cast err to awserr.Error to get the Code and
 		// Message from an error.
 		fmt.Println(err.Error())
-		return "", err
+		return &ec2.StopInstancesOutput{}, err
 	}
 
-	return "", nil
+	return resp, nil
 }

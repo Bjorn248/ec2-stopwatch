@@ -37,7 +37,7 @@ type schedule struct {
 }
 
 // TODO Make this work with the user object stored in redis
-// It does not currently
+// It does not currently, instead the json is typecasted
 type User struct {
 	aws map[string]map[string]map[string]*schedule
 }
@@ -373,9 +373,6 @@ func awsSchedule(c *gin.Context) {
 			cronScheduler.AddFunc(cronStringEnd, func() {
 				stopInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
 			})
-
-			fmt.Printf("%+v", cronScheduler.Entries())
-			fmt.Printf("%#v", cronScheduler.Entries())
 
 			c.JSON(http.StatusOK, gin.H{
 				"status": "making progress"})

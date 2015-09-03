@@ -55,6 +55,9 @@ func main() {
 	cronScheduler.Start()
 
 	// TODO Load all schedules from redis into scheduler on application start
+	if redisErr := loadSchedulesFromRedis(); redisErr != nil {
+		log.Fatalf("Something went wrong loading schedules from Redis: %s", redisErr)
+	}
 
 	// Instantiate Gin Router
 	router := gin.Default()
