@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/vault/api"
+	"github.com/robfig/cron"
 	"log"
 	"os"
 )
@@ -48,6 +49,12 @@ func main() {
 	if poolErr != nil {
 		log.Fatalf("Something went wrong connecting to Redis! Error is '%s'", poolErr)
 	}
+
+	// Instantiate Cron Scheduler
+	cronScheduler = cron.New()
+	cronScheduler.Start()
+
+	// TODO Load all schedules from redis into scheduler on application start
 
 	// Instantiate Gin Router
 	router := gin.Default()

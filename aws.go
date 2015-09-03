@@ -75,7 +75,36 @@ func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Re
 		fmt.Println(err.Error())
 		return "", err
 	}
-	fmt.Println(resp)
+
+	return "", nil
+}
+
+func stopInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (string, error) {
+	// Ensure that region is valid
+	_, ok := regions[Region]
+	if ok == false {
+		return "", invalidRegionError
+	}
+
+	// Initialize AWS Credentials
+	creds := credentials.NewStaticCredentials(AccessKeyID, SecretKeyID, "")
+
+	// Initialize ec2 service
+	svc := ec2.New(&aws.Config{Credentials: creds, Region: aws.String(Region)})
+
+	params := &ec2.StopInstancesInput{
+		InstanceIds: []*string{
+			aws.String(InstanceID),
+		},
+		DryRun: aws.Bool(false),
+	}
+	resp, err := svc.StopInstances(params)
+	if err != nil {
+		// Print the error, cast err to awserr.Error to get the Code and
+		// Message from an error.
+		fmt.Println(err.Error())
+		return "", err
+	}
 
 	return "", nil
 }

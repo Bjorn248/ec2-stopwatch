@@ -350,13 +350,32 @@ func awsSchedule(c *gin.Context) {
 			}
 
 			// TODO Below is working POC code for starting an instance, need to move everything to cron
-			// response, err := startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
-			// if err != nil {
-			// 	fmt.Println(err)
-			// 	c.JSON(http.StatusInternalServerError, gin.H{
-			// 		"status": "Error starting ec2 instance"})
-			// 	return
-			// }
+			/*
+				response, err := stopInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
+				if err != nil {
+					fmt.Println(err)
+					c.JSON(http.StatusInternalServerError, gin.H{
+						"status": "Error stopping ec2 instance"})
+					return
+				}
+
+				fmt.Println(response)
+			*/
+
+			cronStringStart := fmt.Sprintf("0 %s %s %s %s %s", jsonRequestData.StartSchedule.Minute, jsonRequestData.StartSchedule.Hour, jsonRequestData.StartSchedule.DayOfMonth,
+				jsonRequestData.StartSchedule.Month, jsonRequestData.StartSchedule.DayOfWeek)
+			cronStringEnd := fmt.Sprintf("0 %s %s %s %s %s", jsonRequestData.EndSchedule.Minute, jsonRequestData.EndSchedule.Hour, jsonRequestData.EndSchedule.DayOfMonth,
+				jsonRequestData.EndSchedule.Month, jsonRequestData.EndSchedule.DayOfWeek)
+
+			cronScheduler.AddFunc(cronStringStart, func() {
+				startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
+			})
+			cronScheduler.AddFunc(cronStringEnd, func() {
+				stopInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
+			})
+
+			fmt.Printf("%+v", cronScheduler.Entries())
+			fmt.Printf("%#v", cronScheduler.Entries())
 
 			c.JSON(http.StatusOK, gin.H{
 				"status": "making progress"})
