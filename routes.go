@@ -367,6 +367,8 @@ func awsSchedule(c *gin.Context) {
 			cronStringEnd := fmt.Sprintf("0 %s %s %s %s %s", jsonRequestData.EndSchedule.Minute, jsonRequestData.EndSchedule.Hour, jsonRequestData.EndSchedule.DayOfMonth,
 				jsonRequestData.EndSchedule.Month, jsonRequestData.EndSchedule.DayOfWeek)
 
+			// TODO Investigate if putting a function with the secret as a param into the scheduler is a security concern, it doesn't make me feel good
+			// Alternative would be to lookup the secret from vaul as a part of the startInstance and stopInstance functions
 			cronScheduler.AddFunc(cronStringStart, func() {
 				startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
 			})
