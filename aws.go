@@ -6,6 +6,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/route53"
+	"time"
 )
 
 const (
@@ -33,6 +35,7 @@ var regions map[string]int = map[string]int{
 }
 
 var invalidRegionError error = errors.New("Region string not valid")
+var unknownIPError error = errors.New("Unable to retrieve IP after 5 minutes")
 
 /*
 Starts an ec2 instance. To be used in combination with
@@ -49,7 +52,7 @@ String - AWS Region - Region
 Returns
 TODO Determine proper return values
 */
-func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (*ec2.StartInstancesOutput, error) {
+func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string, ddns DDNS) (*ec2.StartInstancesOutput, error) {
 	// Ensure that region is valid
 	_, ok := regions[Region]
 	if ok == false {
@@ -74,6 +77,11 @@ func startInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Re
 		// Message from an error.
 		fmt.Println(err.Error())
 		return &ec2.StartInstancesOutput{}, err
+	}
+
+	if ddns.Enabled == "true" {
+		go dynamicDNS(AccessKeyID, SecretKeyID, InstanceID, Region, ddns.Domain, ddns.HostedZoneID)
+
 	}
 
 	return resp, nil
@@ -107,4 +115,87 @@ func stopInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Reg
 	}
 
 	return resp, nil
+}
+
+func getPublicIPOfInstance(AccessKeyID string, SecretKeyID string, InstanceID string, Region string) (*ec2.DescribeInstancesOutput, error) {
+	// Ensure that region is valid
+	_, ok := regions[Region]
+	if ok == false {
+		return &ec2.DescribeInstancesOutput{}, invalidRegionError
+	}
+
+	// Initialize AWS Credentials
+	creds := credentials.NewStaticCredentials(AccessKeyID, SecretKeyID, "")
+
+	// Initialize ec2 service
+	svc := ec2.New(&aws.Config{Credentials: creds, Region: aws.String(Region)})
+
+	params := &ec2.DescribeInstancesInput{
+		InstanceIds: []*string{
+			aws.String(InstanceID),
+		},
+		DryRun: aws.Bool(false),
+	}
+
+	for i := 0; i < 10; i++ {
+		resp, err := svc.DescribeInstances(params)
+		if err != nil {
+			fmt.Println(err.Error())
+			return &ec2.DescribeInstancesOutput{}, err
+		}
+		if resp.Reservations[0].Instances[0].PublicIpAddress == nil {
+			fmt.Println("no public ip")
+			time.Sleep(30 * time.Second)
+			continue
+		}
+		return resp, nil
+	}
+	return &ec2.DescribeInstancesOutput{}, unknownIPError
+
+}
+
+// This function sets the A record of a domain to the IP of a running instance
+func dynamicDNS(AccessKeyID string, SecretKeyID string, InstanceID string, Region string, Domain string, HostedZoneID string) error {
+	// Get IP of freshly booted instance
+	publicIpResponse, err := getPublicIPOfInstance(AccessKeyID, SecretKeyID, InstanceID, Region)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	IP := publicIpResponse.Reservations[0].Instances[0].PublicIpAddress
+	creds := credentials.NewStaticCredentials(AccessKeyID, SecretKeyID, "")
+
+	// Initialize Route53 Service
+	svc := route53.New(&aws.Config{Credentials: creds})
+
+	params := &route53.ChangeResourceRecordSetsInput{
+		ChangeBatch: &route53.ChangeBatch{
+			Changes: []*route53.Change{
+				{
+					Action: aws.String("UPSERT"),
+					ResourceRecordSet: &route53.ResourceRecordSet{
+						Name: aws.String(Domain),
+						Type: aws.String(route53.RRTypeA),
+						ResourceRecords: []*route53.ResourceRecord{
+							{
+								Value: IP,
+							},
+						},
+						TTL: aws.Int64(300),
+					},
+				},
+			},
+			Comment: aws.String("Updating Domain for EC2 Instance via Stopwatch"),
+		},
+		HostedZoneId: aws.String(HostedZoneID),
+	}
+	resp, err := svc.ChangeResourceRecordSets(params)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+	fmt.Printf("%+v\n", resp)
+	return nil
 }

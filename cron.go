@@ -78,6 +78,15 @@ func loadSchedulesFromRedis() error {
 				start := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["start"].(map[string]interface{})
 				stop := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["stop"].(map[string]interface{})
 				region := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["region"].(string)
+				ddns_enabled := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["ddns"].(map[string]interface{})["enabled"].(string)
+				var ddns_struct DDNS
+				if InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["ddns"].(map[string]interface{})["domain"] == nil && InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["ddns"].(map[string]interface{})["hosted_zone_id"] == nil {
+					domain := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["ddns"].(map[string]interface{})["domain"].(string)
+					hosted_zone_id := InstanceIDs.(map[string]interface{})[InstanceID].(map[string]interface{})["ddns"].(map[string]interface{})["hosted_zone_id"].(string)
+					ddns_struct = DDNS{Enabled: ddns_enabled, Domain: domain, HostedZoneID: hosted_zone_id}
+				} else {
+					ddns_struct = DDNS{Enabled: ddns_enabled}
+				}
 
 				cronStringStart := fmt.Sprintf("0 %s %s %s %s %s", start["minute"], start["hour"], start["day_of_month"],
 					start["month"], start["day_of_week"])
@@ -85,7 +94,7 @@ func loadSchedulesFromRedis() error {
 					stop["month"], stop["day_of_week"])
 
 				cronScheduler.AddFunc(cronStringStart, func() {
-					startInstance(awsAccountID, awsSecret.(string), InstanceID, region)
+					startInstance(awsAccountID, awsSecret.(string), InstanceID, region, ddns_struct)
 				})
 				cronScheduler.AddFunc(cronStringEnd, func() {
 					stopInstance(awsAccountID, awsSecret.(string), InstanceID, region)

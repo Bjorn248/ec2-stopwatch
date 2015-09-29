@@ -26,6 +26,7 @@ type ScheduleRequest struct {
 	StartSchedule  schedule `json:"start" binding:"required"`
 	EndSchedule    schedule `json:"end" binding:"required"`
 	ExpirationDate int      `json:"expiration"`
+	DynDNS         DDNS     `json:"ddns"`
 }
 
 type schedule struct {
@@ -34,6 +35,12 @@ type schedule struct {
 	DayOfMonth string `json:"day_of_month" binding:"required"`
 	Month      string `json:"month" binding:"required"`
 	DayOfWeek  string `json:"day_of_week" binding:"required"`
+}
+
+type DDNS struct {
+	Enabled      string `json:"enabled" binding:"required,eq=true|eq=false"`
+	Domain       string `json:"domain"`
+	HostedZoneID string `json:"hosted_zone_id"`
 }
 
 // TODO Make this work with the user object stored in redis
@@ -272,7 +279,6 @@ func awsSchedule(c *gin.Context) {
 			}
 
 			awsSecret := secret.Data["secret_key"]
-			fmt.Println(awsSecret)
 
 			UserFromRedis, redisError := redis.String(redisConn.Do("GET", SwToken.Email))
 			if redisError != nil {
@@ -328,6 +334,13 @@ func awsSchedule(c *gin.Context) {
 			// Add Region
 			jsonData["aws"].(map[string]interface{})[jsonRequestData.AccessKeyID].(map[string]interface{})[jsonRequestData.InstanceID].(map[string]interface{})["region"] = jsonRequestData.Region
 
+			// Add ddns enabled and domain
+			jsonData["aws"].(map[string]interface{})[jsonRequestData.AccessKeyID].(map[string]interface{})[jsonRequestData.InstanceID].(map[string]interface{})["ddns"] = map[string]string{
+				"enabled":        jsonRequestData.DynDNS.Enabled,
+				"domain":         jsonRequestData.DynDNS.Domain,
+				"hosted_zone_id": jsonRequestData.DynDNS.HostedZoneID,
+			}
+
 			// Back to string
 			jsonMarshaled, jsonError = json.Marshal(jsonData)
 			if jsonError != nil {
@@ -368,9 +381,9 @@ func awsSchedule(c *gin.Context) {
 				jsonRequestData.EndSchedule.Month, jsonRequestData.EndSchedule.DayOfWeek)
 
 			// TODO Investigate if putting a function with the secret as a param into the scheduler is a security concern, it doesn't make me feel good
-			// Alternative would be to lookup the secret from vaul as a part of the startInstance and stopInstance functions
+			// Alternative would be to lookup the secret from vault as a part of the startInstance and stopInstance functions
 			cronScheduler.AddFunc(cronStringStart, func() {
-				startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
+				startInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region, jsonRequestData.DynDNS)
 			})
 			cronScheduler.AddFunc(cronStringEnd, func() {
 				stopInstance(jsonRequestData.AccessKeyID, awsSecret.(string), jsonRequestData.InstanceID, jsonRequestData.Region)
