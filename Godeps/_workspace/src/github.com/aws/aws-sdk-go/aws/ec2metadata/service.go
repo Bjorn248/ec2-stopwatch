@@ -7,9 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/service"
-	"github.com/aws/aws-sdk-go/aws/service/serviceinfo"
 )
 
 // DefaultRetries states the default number of times the service client will
@@ -58,12 +56,10 @@ type Client struct {
 // with the defaults package and credentials EC2 Role Provider.
 func New(config *Config) *Client {
 	service := &service.Service{
-		ServiceInfo: serviceinfo.ServiceInfo{
-			Config:      copyConfig(config),
-			ServiceName: "Client",
-			Endpoint:    "http://169.254.169.254/latest",
-			APIVersion:  "latest",
-		},
+		Config:      copyConfig(config),
+		ServiceName: "Client",
+		Endpoint:    "http://169.254.169.254/latest",
+		APIVersion:  "latest",
 	}
 	service.Initialize()
 	service.Handlers.Unmarshal.PushBack(unmarshalHandler)
@@ -107,7 +103,7 @@ type metadataOutput struct {
 	Content string
 }
 
-func unmarshalHandler(r *request.Request) {
+func unmarshalHandler(r *service.Request) {
 	defer r.HTTPResponse.Body.Close()
 	b, err := ioutil.ReadAll(r.HTTPResponse.Body)
 	if err != nil {
@@ -118,7 +114,7 @@ func unmarshalHandler(r *request.Request) {
 	data.Content = string(b)
 }
 
-func unmarshalError(r *request.Request) {
+func unmarshalError(r *service.Request) {
 	defer r.HTTPResponse.Body.Close()
 	_, err := ioutil.ReadAll(r.HTTPResponse.Body)
 	if err != nil {
@@ -128,8 +124,8 @@ func unmarshalError(r *request.Request) {
 	// TODO extract the error...
 }
 
-func validateEndpointHandler(r *request.Request) {
+func validateEndpointHandler(r *service.Request) {
 	if r.Service.Endpoint == "" {
-		r.Error = aws.ErrMissingEndpoint
+		r.Error = service.ErrMissingEndpoint
 	}
 }

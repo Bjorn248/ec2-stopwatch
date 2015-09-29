@@ -35,5 +35,4 @@ var DefaultConfig = aws.NewConfig().
 	WithHTTPClient(http.DefaultClient).
 	WithMaxRetries(aws.DefaultRetries).
 	WithLogger(aws.NewDefaultLogger()).
-	WithLogLevel(aws.LogOff).
-	WithSleepDelay(time.Sleep)
+	WithLogLevel(aws.LogOff)

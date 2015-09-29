@@ -13,7 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
-	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/aws/service"
 )
 
 func initTestServer(path string, resp string) *httptest.Server {
@@ -29,14 +29,14 @@ func initTestServer(path string, resp string) *httptest.Server {
 
 func TestEndpoint(t *testing.T) {
 	c := ec2metadata.New(&ec2metadata.Config{})
-	op := &request.Operation{
+	op := &service.Operation{
 		Name:       "GetMetadata",
 		HTTPMethod: "GET",
 		HTTPPath:   path.Join("/", "meta-data", "testpath"),
 	}
 
-	req := c.Service.NewRequest(op, nil, nil)
-	assert.Equal(t, "http://169.254.169.254/latest", req.Service.Endpoint)
+	req := service.NewRequest(c.Service, op, nil, nil)
+	assert.Equal(t, "http://169.254.169.254/latest", req.Endpoint)
 	assert.Equal(t, "http://169.254.169.254/latest/meta-data/testpath", req.HTTPRequest.URL.String())
 }
 
@@ -84,7 +84,7 @@ func TestMetadataAvailable(t *testing.T) {
 func TestMetadataNotAvailable(t *testing.T) {
 	c := ec2metadata.New(nil)
 	c.Handlers.Send.Clear()
-	c.Handlers.Send.PushBack(func(r *request.Request) {
+	c.Handlers.Send.PushBack(func(r *service.Request) {
 		r.HTTPResponse = &http.Response{
 			StatusCode: int(0),
 			Status:     http.StatusText(int(0)),

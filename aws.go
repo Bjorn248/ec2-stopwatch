@@ -196,6 +196,5 @@ func dynamicDNS(AccessKeyID string, SecretKeyID string, InstanceID string, Regio
 		fmt.Println(err.Error())
 		return err
 	}
-	fmt.Printf("%+v\n", resp)
 	return nil
 }

@@ -2,7 +2,6 @@ package aws
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
 )
@@ -12,10 +11,10 @@ import (
 const DefaultRetries = -1
 
 // A Config provides service configuration for service clients. By default,
-// all clients will use the {defaults.DefaultConfig} structure.
+// all clients will use the {DefaultConfig} structure.
 type Config struct {
 	// The credentials object to use when signing requests. Defaults to
-	// {defaults.DefaultChainCredentials}.
+	// {DefaultChainCredentials}.
 	Credentials *credentials.Credentials
 
 	// An optional endpoint URL (hostname only or fully qualified URI)
@@ -74,8 +73,6 @@ type Config struct {
 	// @see http://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html
 	//   Amazon S3: Virtual Hosting of Buckets
 	S3ForcePathStyle *bool
-
-	SleepDelay func(time.Duration)
 }
 
 // NewConfig returns a new Config pointer that can be chained with builder methods to
@@ -164,13 +161,6 @@ func (c *Config) WithS3ForcePathStyle(force bool) *Config {
 	return c
 }
 
-// WithSleepDelay overrides the function used to sleep while waiting for the
-// next retry. Defaults to time.Sleep.
-func (c *Config) WithSleepDelay(fn func(time.Duration)) *Config {
-	c.SleepDelay = fn
-	return c
-}
-
 // Merge returns a new Config with the other Config's attribute values merged into
 // this Config. If the other Config's attribute is nil it will not be merged into
 // the new Config to be returned.
@@ -223,10 +213,6 @@ func (c Config) Merge(other *Config) *Config {
 
 	if other.S3ForcePathStyle != nil {
 		dst.S3ForcePathStyle = other.S3ForcePathStyle
-	}
-
-	if other.SleepDelay != nil {
-		dst.SleepDelay = other.SleepDelay
 	}
 
 	return &dst

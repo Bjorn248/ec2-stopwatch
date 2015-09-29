@@ -4,43 +4,53 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/endpoints",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/ec2query",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
-			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query/queryutil",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/query",
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/rest",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/restxml",
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/protocol/xml/xmlutil",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/internal/signer/v4",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/service/ec2",
-			"Comment": "v0.9.4rc5-2-g18ac217",
-			"Rev": "18ac217c5abb1a13a5a9b63c1a3aa3e74e8fdaee"
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
+		},
+		{
+			"ImportPath": "github.com/aws/aws-sdk-go/service/route53",
+			"Comment": "v0.9.0rc1-13-g87dbf7e",
+			"Rev": "87dbf7e29df163bd17d9cea9a03cb75eb8b76d29"
 		},
 		{
 			"ImportPath": "github.com/garyburd/redigo/internal",
@@ -52,8 +62,8 @@
 		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
-			"Comment": "v1.0rc1-136-gfd5d429",
-			"Rev": "fd5d4294a5d5223d55fc76d7840f4b0ad91647bb"
+			"Comment": "v1.0rc1-143-g704d690",
+			"Rev": "704d690ac0e25fcd060ff82f75f913e879e65a3c"
 		},
 		{
 			"ImportPath": "github.com/hashicorp/go-multierror",
@@ -65,17 +75,17 @@
 		},
 		{
 			"ImportPath": "github.com/hashicorp/vault/api",
-			"Comment": "v0.1.2-400-g70b330b",
-			"Rev": "70b330b8ac1d096ec2bde4ff892a3c2d9942668f"
+			"Comment": "v0.2.0-306-ga88fd92",
+			"Rev": "a88fd9236522ae247ed4918998739d2852e2daf2"
 		},
 		{
 			"ImportPath": "github.com/hashicorp/vault/helper/uuid",
-			"Comment": "v0.1.2-400-g70b330b",
-			"Rev": "70b330b8ac1d096ec2bde4ff892a3c2d9942668f"
+			"Comment": "v0.2.0-306-ga88fd92",
+			"Rev": "a88fd9236522ae247ed4918998739d2852e2daf2"
 		},
 		{
 			"ImportPath": "github.com/manucorporat/sse",
-			"Rev": "fe6ea2c8e398672518ef204bf0fbd9af858d0e15"
+			"Rev": "c142f0f1baea5cef7f98a8a6c222f6134368c1f5"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-colorable",
@@ -84,6 +94,11 @@
 		{
 			"ImportPath": "github.com/mitchellh/mapstructure",
 			"Rev": "281073eb9eb092240d33ef253c404f1cca550309"
+		},
+		{
+			"ImportPath": "github.com/robfig/cron",
+			"Comment": "v1-2-g67823cd",
+			"Rev": "67823cd24dece1b04cced3a0a0b3ca2bc84d875e"
 		},
 		{
 			"ImportPath": "github.com/sendgrid/sendgrid-go",
@@ -101,12 +116,12 @@
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
-			"Rev": "b71143c25f0aad5f54981684b715686d34c56d25"
+			"Rev": "66f0418ca41253f8d1a024eb9754e9441a8e79b9"
 		},
 		{
 			"ImportPath": "gopkg.in/bluesuncorp/validator.v5",
-			"Comment": "v5.10.3",
-			"Rev": "77108103e5fd435ff31967e1a011fda801391c85"
+			"Comment": "v5.10",
+			"Rev": "d2748d5ae5e5af5ec3a85e3a59bf0db9d741c82d"
 		}
 	]
 }

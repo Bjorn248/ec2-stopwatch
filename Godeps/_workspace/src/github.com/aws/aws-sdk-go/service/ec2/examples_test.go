@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
@@ -24,14 +26,22 @@ func ExampleEC2_AcceptVpcPeeringConnection() {
 	resp, err := svc.AcceptVpcPeeringConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AllocateAddress() {
@@ -44,14 +54,22 @@ func ExampleEC2_AllocateAddress() {
 	resp, err := svc.AllocateAddress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AssignPrivateIpAddresses() {
@@ -69,14 +87,22 @@ func ExampleEC2_AssignPrivateIpAddresses() {
 	resp, err := svc.AssignPrivateIpAddresses(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AssociateAddress() {
@@ -94,14 +120,22 @@ func ExampleEC2_AssociateAddress() {
 	resp, err := svc.AssociateAddress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AssociateDhcpOptions() {
@@ -115,14 +149,22 @@ func ExampleEC2_AssociateDhcpOptions() {
 	resp, err := svc.AssociateDhcpOptions(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AssociateRouteTable() {
@@ -136,14 +178,22 @@ func ExampleEC2_AssociateRouteTable() {
 	resp, err := svc.AssociateRouteTable(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AttachClassicLinkVpc() {
@@ -161,14 +211,22 @@ func ExampleEC2_AttachClassicLinkVpc() {
 	resp, err := svc.AttachClassicLinkVpc(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AttachInternetGateway() {
@@ -182,14 +240,22 @@ func ExampleEC2_AttachInternetGateway() {
 	resp, err := svc.AttachInternetGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AttachNetworkInterface() {
@@ -204,14 +270,22 @@ func ExampleEC2_AttachNetworkInterface() {
 	resp, err := svc.AttachNetworkInterface(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AttachVolume() {
@@ -226,14 +300,22 @@ func ExampleEC2_AttachVolume() {
 	resp, err := svc.AttachVolume(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AttachVpnGateway() {
@@ -247,14 +329,22 @@ func ExampleEC2_AttachVpnGateway() {
 	resp, err := svc.AttachVpnGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AuthorizeSecurityGroupEgress() {
@@ -301,14 +391,22 @@ func ExampleEC2_AuthorizeSecurityGroupEgress() {
 	resp, err := svc.AuthorizeSecurityGroupEgress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_AuthorizeSecurityGroupIngress() {
@@ -356,14 +454,22 @@ func ExampleEC2_AuthorizeSecurityGroupIngress() {
 	resp, err := svc.AuthorizeSecurityGroupIngress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_BundleInstance() {
@@ -385,14 +491,22 @@ func ExampleEC2_BundleInstance() {
 	resp, err := svc.BundleInstance(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelBundleTask() {
@@ -405,14 +519,22 @@ func ExampleEC2_CancelBundleTask() {
 	resp, err := svc.CancelBundleTask(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelConversionTask() {
@@ -426,14 +548,22 @@ func ExampleEC2_CancelConversionTask() {
 	resp, err := svc.CancelConversionTask(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelExportTask() {
@@ -445,14 +575,22 @@ func ExampleEC2_CancelExportTask() {
 	resp, err := svc.CancelExportTask(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelImportTask() {
@@ -466,14 +604,22 @@ func ExampleEC2_CancelImportTask() {
 	resp, err := svc.CancelImportTask(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelReservedInstancesListing() {
@@ -485,14 +631,22 @@ func ExampleEC2_CancelReservedInstancesListing() {
 	resp, err := svc.CancelReservedInstancesListing(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelSpotFleetRequests() {
@@ -509,14 +663,22 @@ func ExampleEC2_CancelSpotFleetRequests() {
 	resp, err := svc.CancelSpotFleetRequests(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CancelSpotInstanceRequests() {
@@ -532,14 +694,22 @@ func ExampleEC2_CancelSpotInstanceRequests() {
 	resp, err := svc.CancelSpotInstanceRequests(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ConfirmProductInstance() {
@@ -553,14 +723,22 @@ func ExampleEC2_ConfirmProductInstance() {
 	resp, err := svc.ConfirmProductInstance(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CopyImage() {
@@ -577,14 +755,22 @@ func ExampleEC2_CopyImage() {
 	resp, err := svc.CopyImage(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CopySnapshot() {
@@ -603,14 +789,22 @@ func ExampleEC2_CopySnapshot() {
 	resp, err := svc.CopySnapshot(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateCustomerGateway() {
@@ -625,14 +819,22 @@ func ExampleEC2_CreateCustomerGateway() {
 	resp, err := svc.CreateCustomerGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateDhcpOptions() {
@@ -654,14 +856,22 @@ func ExampleEC2_CreateDhcpOptions() {
 	resp, err := svc.CreateDhcpOptions(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateFlowLogs() {
@@ -681,14 +891,22 @@ func ExampleEC2_CreateFlowLogs() {
 	resp, err := svc.CreateFlowLogs(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateImage() {
@@ -720,14 +938,22 @@ func ExampleEC2_CreateImage() {
 	resp, err := svc.CreateImage(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateInstanceExportTask() {
@@ -747,14 +973,22 @@ func ExampleEC2_CreateInstanceExportTask() {
 	resp, err := svc.CreateInstanceExportTask(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateInternetGateway() {
@@ -766,14 +1000,22 @@ func ExampleEC2_CreateInternetGateway() {
 	resp, err := svc.CreateInternetGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateKeyPair() {
@@ -786,14 +1028,22 @@ func ExampleEC2_CreateKeyPair() {
 	resp, err := svc.CreateKeyPair(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateNetworkAcl() {
@@ -806,14 +1056,22 @@ func ExampleEC2_CreateNetworkAcl() {
 	resp, err := svc.CreateNetworkAcl(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateNetworkAclEntry() {
@@ -839,14 +1097,22 @@ func ExampleEC2_CreateNetworkAclEntry() {
 	resp, err := svc.CreateNetworkAclEntry(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateNetworkInterface() {
@@ -873,14 +1139,22 @@ func ExampleEC2_CreateNetworkInterface() {
 	resp, err := svc.CreateNetworkInterface(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreatePlacementGroup() {
@@ -894,14 +1168,22 @@ func ExampleEC2_CreatePlacementGroup() {
 	resp, err := svc.CreatePlacementGroup(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateReservedInstancesListing() {
@@ -923,14 +1205,22 @@ func ExampleEC2_CreateReservedInstancesListing() {
 	resp, err := svc.CreateReservedInstancesListing(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateRoute() {
@@ -948,14 +1238,22 @@ func ExampleEC2_CreateRoute() {
 	resp, err := svc.CreateRoute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateRouteTable() {
@@ -968,14 +1266,22 @@ func ExampleEC2_CreateRouteTable() {
 	resp, err := svc.CreateRouteTable(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateSecurityGroup() {
@@ -990,14 +1296,22 @@ func ExampleEC2_CreateSecurityGroup() {
 	resp, err := svc.CreateSecurityGroup(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateSnapshot() {
@@ -1011,14 +1325,22 @@ func ExampleEC2_CreateSnapshot() {
 	resp, err := svc.CreateSnapshot(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateSpotDatafeedSubscription() {
@@ -1032,14 +1354,22 @@ func ExampleEC2_CreateSpotDatafeedSubscription() {
 	resp, err := svc.CreateSpotDatafeedSubscription(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateSubnet() {
@@ -1054,14 +1384,22 @@ func ExampleEC2_CreateSubnet() {
 	resp, err := svc.CreateSubnet(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateTags() {
@@ -1084,14 +1422,22 @@ func ExampleEC2_CreateTags() {
 	resp, err := svc.CreateTags(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVolume() {
@@ -1110,14 +1456,22 @@ func ExampleEC2_CreateVolume() {
 	resp, err := svc.CreateVolume(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpc() {
@@ -1131,14 +1485,22 @@ func ExampleEC2_CreateVpc() {
 	resp, err := svc.CreateVpc(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpcEndpoint() {
@@ -1158,14 +1520,22 @@ func ExampleEC2_CreateVpcEndpoint() {
 	resp, err := svc.CreateVpcEndpoint(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpcPeeringConnection() {
@@ -1180,14 +1550,22 @@ func ExampleEC2_CreateVpcPeeringConnection() {
 	resp, err := svc.CreateVpcPeeringConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpnConnection() {
@@ -1205,14 +1583,22 @@ func ExampleEC2_CreateVpnConnection() {
 	resp, err := svc.CreateVpnConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpnConnectionRoute() {
@@ -1225,14 +1611,22 @@ func ExampleEC2_CreateVpnConnectionRoute() {
 	resp, err := svc.CreateVpnConnectionRoute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_CreateVpnGateway() {
@@ -1246,14 +1640,22 @@ func ExampleEC2_CreateVpnGateway() {
 	resp, err := svc.CreateVpnGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteCustomerGateway() {
@@ -1266,14 +1668,22 @@ func ExampleEC2_DeleteCustomerGateway() {
 	resp, err := svc.DeleteCustomerGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteDhcpOptions() {
@@ -1286,14 +1696,22 @@ func ExampleEC2_DeleteDhcpOptions() {
 	resp, err := svc.DeleteDhcpOptions(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteFlowLogs() {
@@ -1308,14 +1726,22 @@ func ExampleEC2_DeleteFlowLogs() {
 	resp, err := svc.DeleteFlowLogs(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteInternetGateway() {
@@ -1328,14 +1754,22 @@ func ExampleEC2_DeleteInternetGateway() {
 	resp, err := svc.DeleteInternetGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteKeyPair() {
@@ -1348,14 +1782,22 @@ func ExampleEC2_DeleteKeyPair() {
 	resp, err := svc.DeleteKeyPair(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteNetworkAcl() {
@@ -1368,14 +1810,22 @@ func ExampleEC2_DeleteNetworkAcl() {
 	resp, err := svc.DeleteNetworkAcl(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteNetworkAclEntry() {
@@ -1390,14 +1840,22 @@ func ExampleEC2_DeleteNetworkAclEntry() {
 	resp, err := svc.DeleteNetworkAclEntry(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteNetworkInterface() {
@@ -1410,14 +1868,22 @@ func ExampleEC2_DeleteNetworkInterface() {
 	resp, err := svc.DeleteNetworkInterface(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeletePlacementGroup() {
@@ -1430,14 +1896,22 @@ func ExampleEC2_DeletePlacementGroup() {
 	resp, err := svc.DeletePlacementGroup(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteRoute() {
@@ -1451,14 +1925,22 @@ func ExampleEC2_DeleteRoute() {
 	resp, err := svc.DeleteRoute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteRouteTable() {
@@ -1471,14 +1953,22 @@ func ExampleEC2_DeleteRouteTable() {
 	resp, err := svc.DeleteRouteTable(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteSecurityGroup() {
@@ -1492,14 +1982,22 @@ func ExampleEC2_DeleteSecurityGroup() {
 	resp, err := svc.DeleteSecurityGroup(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteSnapshot() {
@@ -1512,14 +2010,22 @@ func ExampleEC2_DeleteSnapshot() {
 	resp, err := svc.DeleteSnapshot(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteSpotDatafeedSubscription() {
@@ -1531,14 +2037,22 @@ func ExampleEC2_DeleteSpotDatafeedSubscription() {
 	resp, err := svc.DeleteSpotDatafeedSubscription(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteSubnet() {
@@ -1551,14 +2065,22 @@ func ExampleEC2_DeleteSubnet() {
 	resp, err := svc.DeleteSubnet(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteTags() {
@@ -1581,14 +2103,22 @@ func ExampleEC2_DeleteTags() {
 	resp, err := svc.DeleteTags(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVolume() {
@@ -1601,14 +2131,22 @@ func ExampleEC2_DeleteVolume() {
 	resp, err := svc.DeleteVolume(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpc() {
@@ -1621,14 +2159,22 @@ func ExampleEC2_DeleteVpc() {
 	resp, err := svc.DeleteVpc(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpcEndpoints() {
@@ -1644,14 +2190,22 @@ func ExampleEC2_DeleteVpcEndpoints() {
 	resp, err := svc.DeleteVpcEndpoints(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpcPeeringConnection() {
@@ -1664,14 +2218,22 @@ func ExampleEC2_DeleteVpcPeeringConnection() {
 	resp, err := svc.DeleteVpcPeeringConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpnConnection() {
@@ -1684,14 +2246,22 @@ func ExampleEC2_DeleteVpnConnection() {
 	resp, err := svc.DeleteVpnConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpnConnectionRoute() {
@@ -1704,14 +2274,22 @@ func ExampleEC2_DeleteVpnConnectionRoute() {
 	resp, err := svc.DeleteVpnConnectionRoute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeleteVpnGateway() {
@@ -1724,14 +2302,22 @@ func ExampleEC2_DeleteVpnGateway() {
 	resp, err := svc.DeleteVpnGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DeregisterImage() {
@@ -1744,14 +2330,22 @@ func ExampleEC2_DeregisterImage() {
 	resp, err := svc.DeregisterImage(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeAccountAttributes() {
@@ -1767,14 +2361,22 @@ func ExampleEC2_DescribeAccountAttributes() {
 	resp, err := svc.DescribeAccountAttributes(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeAddresses() {
@@ -1804,14 +2406,22 @@ func ExampleEC2_DescribeAddresses() {
 	resp, err := svc.DescribeAddresses(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeAvailabilityZones() {
@@ -1837,14 +2447,22 @@ func ExampleEC2_DescribeAvailabilityZones() {
 	resp, err := svc.DescribeAvailabilityZones(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeBundleTasks() {
@@ -1870,14 +2488,22 @@ func ExampleEC2_DescribeBundleTasks() {
 	resp, err := svc.DescribeBundleTasks(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeClassicLinkInstances() {
@@ -1905,14 +2531,22 @@ func ExampleEC2_DescribeClassicLinkInstances() {
 	resp, err := svc.DescribeClassicLinkInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeConversionTasks() {
@@ -1938,14 +2572,22 @@ func ExampleEC2_DescribeConversionTasks() {
 	resp, err := svc.DescribeConversionTasks(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeCustomerGateways() {
@@ -1971,14 +2613,22 @@ func ExampleEC2_DescribeCustomerGateways() {
 	resp, err := svc.DescribeCustomerGateways(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeDhcpOptions() {
@@ -2004,14 +2654,22 @@ func ExampleEC2_DescribeDhcpOptions() {
 	resp, err := svc.DescribeDhcpOptions(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeExportTasks() {
@@ -2026,14 +2684,22 @@ func ExampleEC2_DescribeExportTasks() {
 	resp, err := svc.DescribeExportTasks(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeFlowLogs() {
@@ -2060,14 +2726,22 @@ func ExampleEC2_DescribeFlowLogs() {
 	resp, err := svc.DescribeFlowLogs(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeImageAttribute() {
@@ -2081,14 +2755,22 @@ func ExampleEC2_DescribeImageAttribute() {
 	resp, err := svc.DescribeImageAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeImages() {
@@ -2122,14 +2804,22 @@ func ExampleEC2_DescribeImages() {
 	resp, err := svc.DescribeImages(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeImportImageTasks() {
@@ -2157,14 +2847,22 @@ func ExampleEC2_DescribeImportImageTasks() {
 	resp, err := svc.DescribeImportImageTasks(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeImportSnapshotTasks() {
@@ -2192,14 +2890,22 @@ func ExampleEC2_DescribeImportSnapshotTasks() {
 	resp, err := svc.DescribeImportSnapshotTasks(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeInstanceAttribute() {
@@ -2213,14 +2919,22 @@ func ExampleEC2_DescribeInstanceAttribute() {
 	resp, err := svc.DescribeInstanceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeInstanceStatus() {
@@ -2249,14 +2963,22 @@ func ExampleEC2_DescribeInstanceStatus() {
 	resp, err := svc.DescribeInstanceStatus(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeInstances() {
@@ -2284,14 +3006,22 @@ func ExampleEC2_DescribeInstances() {
 	resp, err := svc.DescribeInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeInternetGateways() {
@@ -2317,14 +3047,22 @@ func ExampleEC2_DescribeInternetGateways() {
 	resp, err := svc.DescribeInternetGateways(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeKeyPairs() {
@@ -2350,14 +3088,22 @@ func ExampleEC2_DescribeKeyPairs() {
 	resp, err := svc.DescribeKeyPairs(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeMovingAddresses() {
@@ -2385,14 +3131,22 @@ func ExampleEC2_DescribeMovingAddresses() {
 	resp, err := svc.DescribeMovingAddresses(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeNetworkAcls() {
@@ -2418,14 +3172,22 @@ func ExampleEC2_DescribeNetworkAcls() {
 	resp, err := svc.DescribeNetworkAcls(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeNetworkInterfaceAttribute() {
@@ -2439,14 +3201,22 @@ func ExampleEC2_DescribeNetworkInterfaceAttribute() {
 	resp, err := svc.DescribeNetworkInterfaceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeNetworkInterfaces() {
@@ -2472,14 +3242,22 @@ func ExampleEC2_DescribeNetworkInterfaces() {
 	resp, err := svc.DescribeNetworkInterfaces(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribePlacementGroups() {
@@ -2505,14 +3283,22 @@ func ExampleEC2_DescribePlacementGroups() {
 	resp, err := svc.DescribePlacementGroups(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribePrefixLists() {
@@ -2540,14 +3326,22 @@ func ExampleEC2_DescribePrefixLists() {
 	resp, err := svc.DescribePrefixLists(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeRegions() {
@@ -2573,14 +3367,22 @@ func ExampleEC2_DescribeRegions() {
 	resp, err := svc.DescribeRegions(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeReservedInstances() {
@@ -2607,14 +3409,22 @@ func ExampleEC2_DescribeReservedInstances() {
 	resp, err := svc.DescribeReservedInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeReservedInstancesListings() {
@@ -2637,14 +3447,22 @@ func ExampleEC2_DescribeReservedInstancesListings() {
 	resp, err := svc.DescribeReservedInstancesListings(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeReservedInstancesModifications() {
@@ -2670,14 +3488,22 @@ func ExampleEC2_DescribeReservedInstancesModifications() {
 	resp, err := svc.DescribeReservedInstancesModifications(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeReservedInstancesOfferings() {
@@ -2714,14 +3540,22 @@ func ExampleEC2_DescribeReservedInstancesOfferings() {
 	resp, err := svc.DescribeReservedInstancesOfferings(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeRouteTables() {
@@ -2747,14 +3581,22 @@ func ExampleEC2_DescribeRouteTables() {
 	resp, err := svc.DescribeRouteTables(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSecurityGroups() {
@@ -2784,14 +3626,22 @@ func ExampleEC2_DescribeSecurityGroups() {
 	resp, err := svc.DescribeSecurityGroups(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSnapshotAttribute() {
@@ -2805,14 +3655,22 @@ func ExampleEC2_DescribeSnapshotAttribute() {
 	resp, err := svc.DescribeSnapshotAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSnapshots() {
@@ -2848,14 +3706,22 @@ func ExampleEC2_DescribeSnapshots() {
 	resp, err := svc.DescribeSnapshots(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotDatafeedSubscription() {
@@ -2867,14 +3733,22 @@ func ExampleEC2_DescribeSpotDatafeedSubscription() {
 	resp, err := svc.DescribeSpotDatafeedSubscription(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotFleetInstances() {
@@ -2889,14 +3763,22 @@ func ExampleEC2_DescribeSpotFleetInstances() {
 	resp, err := svc.DescribeSpotFleetInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotFleetRequestHistory() {
@@ -2913,14 +3795,22 @@ func ExampleEC2_DescribeSpotFleetRequestHistory() {
 	resp, err := svc.DescribeSpotFleetRequestHistory(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotFleetRequests() {
@@ -2938,14 +3828,22 @@ func ExampleEC2_DescribeSpotFleetRequests() {
 	resp, err := svc.DescribeSpotFleetRequests(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotInstanceRequests() {
@@ -2971,14 +3869,22 @@ func ExampleEC2_DescribeSpotInstanceRequests() {
 	resp, err := svc.DescribeSpotInstanceRequests(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSpotPriceHistory() {
@@ -3013,14 +3919,22 @@ func ExampleEC2_DescribeSpotPriceHistory() {
 	resp, err := svc.DescribeSpotPriceHistory(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeSubnets() {
@@ -3046,14 +3960,22 @@ func ExampleEC2_DescribeSubnets() {
 	resp, err := svc.DescribeSubnets(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeTags() {
@@ -3077,14 +3999,22 @@ func ExampleEC2_DescribeTags() {
 	resp, err := svc.DescribeTags(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVolumeAttribute() {
@@ -3098,14 +4028,22 @@ func ExampleEC2_DescribeVolumeAttribute() {
 	resp, err := svc.DescribeVolumeAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVolumeStatus() {
@@ -3133,14 +4071,22 @@ func ExampleEC2_DescribeVolumeStatus() {
 	resp, err := svc.DescribeVolumeStatus(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVolumes() {
@@ -3168,14 +4114,22 @@ func ExampleEC2_DescribeVolumes() {
 	resp, err := svc.DescribeVolumes(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcAttribute() {
@@ -3189,14 +4143,22 @@ func ExampleEC2_DescribeVpcAttribute() {
 	resp, err := svc.DescribeVpcAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcClassicLink() {
@@ -3222,14 +4184,22 @@ func ExampleEC2_DescribeVpcClassicLink() {
 	resp, err := svc.DescribeVpcClassicLink(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcEndpointServices() {
@@ -3243,14 +4213,22 @@ func ExampleEC2_DescribeVpcEndpointServices() {
 	resp, err := svc.DescribeVpcEndpointServices(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcEndpoints() {
@@ -3278,14 +4256,22 @@ func ExampleEC2_DescribeVpcEndpoints() {
 	resp, err := svc.DescribeVpcEndpoints(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcPeeringConnections() {
@@ -3311,14 +4297,22 @@ func ExampleEC2_DescribeVpcPeeringConnections() {
 	resp, err := svc.DescribeVpcPeeringConnections(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpcs() {
@@ -3344,14 +4338,22 @@ func ExampleEC2_DescribeVpcs() {
 	resp, err := svc.DescribeVpcs(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpnConnections() {
@@ -3377,14 +4379,22 @@ func ExampleEC2_DescribeVpnConnections() {
 	resp, err := svc.DescribeVpnConnections(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DescribeVpnGateways() {
@@ -3410,14 +4420,22 @@ func ExampleEC2_DescribeVpnGateways() {
 	resp, err := svc.DescribeVpnGateways(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DetachClassicLinkVpc() {
@@ -3431,14 +4449,22 @@ func ExampleEC2_DetachClassicLinkVpc() {
 	resp, err := svc.DetachClassicLinkVpc(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DetachInternetGateway() {
@@ -3452,14 +4478,22 @@ func ExampleEC2_DetachInternetGateway() {
 	resp, err := svc.DetachInternetGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DetachNetworkInterface() {
@@ -3473,14 +4507,22 @@ func ExampleEC2_DetachNetworkInterface() {
 	resp, err := svc.DetachNetworkInterface(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DetachVolume() {
@@ -3496,14 +4538,22 @@ func ExampleEC2_DetachVolume() {
 	resp, err := svc.DetachVolume(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DetachVpnGateway() {
@@ -3517,14 +4567,22 @@ func ExampleEC2_DetachVpnGateway() {
 	resp, err := svc.DetachVpnGateway(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DisableVgwRoutePropagation() {
@@ -3537,14 +4595,22 @@ func ExampleEC2_DisableVgwRoutePropagation() {
 	resp, err := svc.DisableVgwRoutePropagation(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DisableVpcClassicLink() {
@@ -3557,14 +4623,22 @@ func ExampleEC2_DisableVpcClassicLink() {
 	resp, err := svc.DisableVpcClassicLink(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DisassociateAddress() {
@@ -3578,14 +4652,22 @@ func ExampleEC2_DisassociateAddress() {
 	resp, err := svc.DisassociateAddress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_DisassociateRouteTable() {
@@ -3598,14 +4680,22 @@ func ExampleEC2_DisassociateRouteTable() {
 	resp, err := svc.DisassociateRouteTable(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_EnableVgwRoutePropagation() {
@@ -3618,14 +4708,22 @@ func ExampleEC2_EnableVgwRoutePropagation() {
 	resp, err := svc.EnableVgwRoutePropagation(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_EnableVolumeIO() {
@@ -3638,14 +4736,22 @@ func ExampleEC2_EnableVolumeIO() {
 	resp, err := svc.EnableVolumeIO(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_EnableVpcClassicLink() {
@@ -3658,14 +4764,22 @@ func ExampleEC2_EnableVpcClassicLink() {
 	resp, err := svc.EnableVpcClassicLink(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_GetConsoleOutput() {
@@ -3678,14 +4792,22 @@ func ExampleEC2_GetConsoleOutput() {
 	resp, err := svc.GetConsoleOutput(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_GetPasswordData() {
@@ -3698,14 +4820,22 @@ func ExampleEC2_GetPasswordData() {
 	resp, err := svc.GetPasswordData(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ImportImage() {
@@ -3744,14 +4874,22 @@ func ExampleEC2_ImportImage() {
 	resp, err := svc.ImportImage(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ImportInstance() {
@@ -3804,14 +4942,22 @@ func ExampleEC2_ImportInstance() {
 	resp, err := svc.ImportInstance(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ImportKeyPair() {
@@ -3825,14 +4971,22 @@ func ExampleEC2_ImportKeyPair() {
 	resp, err := svc.ImportKeyPair(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ImportSnapshot() {
@@ -3862,14 +5016,22 @@ func ExampleEC2_ImportSnapshot() {
 	resp, err := svc.ImportSnapshot(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ImportVolume() {
@@ -3891,14 +5053,22 @@ func ExampleEC2_ImportVolume() {
 	resp, err := svc.ImportVolume(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyImageAttribute() {
@@ -3927,7 +5097,7 @@ func ExampleEC2_ModifyImageAttribute() {
 				// More values...
 			},
 		},
-		OperationType: aws.String("OperationType"),
+		OperationType: aws.String("String"),
 		ProductCodes: []*string{
 			aws.String("String"), // Required
 			// More values...
@@ -3945,14 +5115,22 @@ func ExampleEC2_ModifyImageAttribute() {
 	resp, err := svc.ModifyImageAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyInstanceAttribute() {
@@ -4010,14 +5188,22 @@ func ExampleEC2_ModifyInstanceAttribute() {
 	resp, err := svc.ModifyInstanceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyNetworkInterfaceAttribute() {
@@ -4044,14 +5230,22 @@ func ExampleEC2_ModifyNetworkInterfaceAttribute() {
 	resp, err := svc.ModifyNetworkInterfaceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyReservedInstances() {
@@ -4076,14 +5270,22 @@ func ExampleEC2_ModifyReservedInstances() {
 	resp, err := svc.ModifyReservedInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifySnapshotAttribute() {
@@ -4113,7 +5315,7 @@ func ExampleEC2_ModifySnapshotAttribute() {
 			aws.String("String"), // Required
 			// More values...
 		},
-		OperationType: aws.String("OperationType"),
+		OperationType: aws.String("String"),
 		UserIds: []*string{
 			aws.String("String"), // Required
 			// More values...
@@ -4122,14 +5324,22 @@ func ExampleEC2_ModifySnapshotAttribute() {
 	resp, err := svc.ModifySnapshotAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifySubnetAttribute() {
@@ -4144,14 +5354,22 @@ func ExampleEC2_ModifySubnetAttribute() {
 	resp, err := svc.ModifySubnetAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyVolumeAttribute() {
@@ -4167,14 +5385,22 @@ func ExampleEC2_ModifyVolumeAttribute() {
 	resp, err := svc.ModifyVolumeAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyVpcAttribute() {
@@ -4192,14 +5418,22 @@ func ExampleEC2_ModifyVpcAttribute() {
 	resp, err := svc.ModifyVpcAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ModifyVpcEndpoint() {
@@ -4222,14 +5456,22 @@ func ExampleEC2_ModifyVpcEndpoint() {
 	resp, err := svc.ModifyVpcEndpoint(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_MonitorInstances() {
@@ -4245,14 +5487,22 @@ func ExampleEC2_MonitorInstances() {
 	resp, err := svc.MonitorInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_MoveAddressToVpc() {
@@ -4265,14 +5515,22 @@ func ExampleEC2_MoveAddressToVpc() {
 	resp, err := svc.MoveAddressToVpc(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_PurchaseReservedInstancesOffering() {
@@ -4290,14 +5548,22 @@ func ExampleEC2_PurchaseReservedInstancesOffering() {
 	resp, err := svc.PurchaseReservedInstancesOffering(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RebootInstances() {
@@ -4313,14 +5579,22 @@ func ExampleEC2_RebootInstances() {
 	resp, err := svc.RebootInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RegisterImage() {
@@ -4357,14 +5631,22 @@ func ExampleEC2_RegisterImage() {
 	resp, err := svc.RegisterImage(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RejectVpcPeeringConnection() {
@@ -4377,14 +5659,22 @@ func ExampleEC2_RejectVpcPeeringConnection() {
 	resp, err := svc.RejectVpcPeeringConnection(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReleaseAddress() {
@@ -4398,14 +5688,22 @@ func ExampleEC2_ReleaseAddress() {
 	resp, err := svc.ReleaseAddress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReplaceNetworkAclAssociation() {
@@ -4419,14 +5717,22 @@ func ExampleEC2_ReplaceNetworkAclAssociation() {
 	resp, err := svc.ReplaceNetworkAclAssociation(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReplaceNetworkAclEntry() {
@@ -4452,14 +5758,22 @@ func ExampleEC2_ReplaceNetworkAclEntry() {
 	resp, err := svc.ReplaceNetworkAclEntry(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReplaceRoute() {
@@ -4477,14 +5791,22 @@ func ExampleEC2_ReplaceRoute() {
 	resp, err := svc.ReplaceRoute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReplaceRouteTableAssociation() {
@@ -4498,14 +5820,22 @@ func ExampleEC2_ReplaceRouteTableAssociation() {
 	resp, err := svc.ReplaceRouteTableAssociation(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ReportInstanceStatus() {
@@ -4529,14 +5859,22 @@ func ExampleEC2_ReportInstanceStatus() {
 	resp, err := svc.ReportInstanceStatus(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RequestSpotFleet() {
@@ -4612,10 +5950,8 @@ func ExampleEC2_RequestSpotFleet() {
 						},
 						// More values...
 					},
-					SpotPrice:        aws.String("String"),
-					SubnetId:         aws.String("String"),
-					UserData:         aws.String("String"),
-					WeightedCapacity: aws.Float64(1.0),
+					SubnetId: aws.String("String"),
+					UserData: aws.String("String"),
 				},
 				// More values...
 			},
@@ -4631,14 +5967,22 @@ func ExampleEC2_RequestSpotFleet() {
 	resp, err := svc.RequestSpotFleet(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RequestSpotInstances() {
@@ -4728,14 +6072,22 @@ func ExampleEC2_RequestSpotInstances() {
 	resp, err := svc.RequestSpotInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ResetImageAttribute() {
@@ -4749,14 +6101,22 @@ func ExampleEC2_ResetImageAttribute() {
 	resp, err := svc.ResetImageAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ResetInstanceAttribute() {
@@ -4770,14 +6130,22 @@ func ExampleEC2_ResetInstanceAttribute() {
 	resp, err := svc.ResetInstanceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ResetNetworkInterfaceAttribute() {
@@ -4791,14 +6159,22 @@ func ExampleEC2_ResetNetworkInterfaceAttribute() {
 	resp, err := svc.ResetNetworkInterfaceAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_ResetSnapshotAttribute() {
@@ -4812,14 +6188,22 @@ func ExampleEC2_ResetSnapshotAttribute() {
 	resp, err := svc.ResetSnapshotAttribute(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RestoreAddressToClassic() {
@@ -4832,14 +6216,22 @@ func ExampleEC2_RestoreAddressToClassic() {
 	resp, err := svc.RestoreAddressToClassic(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RevokeSecurityGroupEgress() {
@@ -4886,14 +6278,22 @@ func ExampleEC2_RevokeSecurityGroupEgress() {
 	resp, err := svc.RevokeSecurityGroupEgress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RevokeSecurityGroupIngress() {
@@ -4941,14 +6341,22 @@ func ExampleEC2_RevokeSecurityGroupIngress() {
 	resp, err := svc.RevokeSecurityGroupIngress(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_RunInstances() {
@@ -5035,14 +6443,22 @@ func ExampleEC2_RunInstances() {
 	resp, err := svc.RunInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_StartInstances() {
@@ -5059,14 +6475,22 @@ func ExampleEC2_StartInstances() {
 	resp, err := svc.StartInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_StopInstances() {
@@ -5083,14 +6507,22 @@ func ExampleEC2_StopInstances() {
 	resp, err := svc.StopInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_TerminateInstances() {
@@ -5106,14 +6538,22 @@ func ExampleEC2_TerminateInstances() {
 	resp, err := svc.TerminateInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_UnassignPrivateIpAddresses() {
@@ -5129,14 +6569,22 @@ func ExampleEC2_UnassignPrivateIpAddresses() {
 	resp, err := svc.UnassignPrivateIpAddresses(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
 
 func ExampleEC2_UnmonitorInstances() {
@@ -5152,12 +6600,20 @@ func ExampleEC2_UnmonitorInstances() {
 	resp, err := svc.UnmonitorInstances(params)
 
 	if err != nil {
-		// Print the error, cast err to awserr.Error to get the Code and
-		// Message from an error.
-		fmt.Println(err.Error())
-		return
+		if awsErr, ok := err.(awserr.Error); ok {
+			// Generic AWS error with Code, Message, and original error (if any)
+			fmt.Println(awsErr.Code(), awsErr.Message(), awsErr.OrigErr())
+			if reqErr, ok := err.(awserr.RequestFailure); ok {
+				// A service error occurred
+				fmt.Println(reqErr.Code(), reqErr.Message(), reqErr.StatusCode(), reqErr.RequestID())
+			}
+		} else {
+			// This case should never be hit, the SDK should always return an
+			// error which satisfies the awserr.Error interface.
+			fmt.Println(err.Error())
+		}
 	}
 
 	// Pretty-print the response data.
-	fmt.Println(resp)
+	fmt.Println(awsutil.Prettify(resp))
 }
