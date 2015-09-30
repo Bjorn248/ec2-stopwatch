@@ -157,10 +157,10 @@ func getPublicIPOfInstance(AccessKeyID string, SecretKeyID string, InstanceID st
 // This function sets the A record of a domain to the IP of a running instance
 func dynamicDNS(AccessKeyID string, SecretKeyID string, InstanceID string, Region string, Domain string, HostedZoneID string) error {
 	// Get IP of freshly booted instance
-	publicIpResponse, err := getPublicIPOfInstance(AccessKeyID, SecretKeyID, InstanceID, Region)
-	if err != nil {
-		fmt.Println(err)
-		return err
+	publicIpResponse, ipErr := getPublicIPOfInstance(AccessKeyID, SecretKeyID, InstanceID, Region)
+	if ipErr != nil {
+		fmt.Println(ipErr)
+		return ipErr
 	}
 
 	IP := publicIpResponse.Reservations[0].Instances[0].PublicIpAddress
@@ -190,7 +190,7 @@ func dynamicDNS(AccessKeyID string, SecretKeyID string, InstanceID string, Regio
 		},
 		HostedZoneId: aws.String(HostedZoneID),
 	}
-	resp, err := svc.ChangeResourceRecordSets(params)
+	_, err := svc.ChangeResourceRecordSets(params)
 
 	if err != nil {
 		fmt.Println(err.Error())
