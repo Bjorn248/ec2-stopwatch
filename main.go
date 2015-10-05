@@ -7,6 +7,8 @@ import (
 	"github.com/robfig/cron"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
@@ -35,10 +37,38 @@ func main() {
 		log.Fatalf("Problem creating vault client, '%s'", vaulterror)
 	}
 
+	// Check seal state of vault
+	sealStatusResponse, sealStatusError := vaultclient.Sys().SealStatus()
+	if sealStatusError != nil {
+		log.Fatalf("Problem getting seal status from vault, '%s'", sealStatusError)
+	}
+	if sealStatusResponse.Sealed == true {
+		// Provide 3 key shards to unseal the vault
+		_, unsealError := vaultclient.Sys().Unseal(os.Getenv("VAULT_KEY_1"))
+		if unsealError != nil {
+			log.Fatalf("Problem unsealing vault, '%s'", unsealError)
+		}
+		_, unsealError = vaultclient.Sys().Unseal(os.Getenv("VAULT_KEY_2"))
+		if unsealError != nil {
+			log.Fatalf("Problem unsealing vault, '%s'", unsealError)
+		}
+		_, unsealError = vaultclient.Sys().Unseal(os.Getenv("VAULT_KEY_3"))
+		if unsealError != nil {
+			log.Fatalf("Problem unsealing vault, '%s'", unsealError)
+		}
+		sealStatusResponse, sealStatusError = vaultclient.Sys().SealStatus()
+		if sealStatusError != nil {
+			log.Fatalf("Problem getting seal status from vault, '%s'", sealStatusError)
+		}
+		if sealStatusResponse.Sealed == false {
+			log.Println("Unsealed Vault")
+		}
+	}
+
 	// Check Vault Connection
 	_, authError := vaultclient.Logical().Read("auth/token/lookup-self")
 	if authError != nil {
-		log.Fatalf("Something went wrong connecting to Vault! Error is '%s'", authError)
+		log.Fatalf("Something went wrong connecting to Vault in main file! Error is '%s'", authError)
 	}
 
 	flag.Parse()
@@ -74,6 +104,22 @@ func main() {
 
 	router.POST("/register", register)
 	router.GET("/verify/:token", verifyToken)
+
+	// Catch SIGINT and SIGTERM and Seal Vault
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	signal.Notify(c, syscall.SIGTERM)
+	go func() {
+		for _ = range c {
+			log.Print("Stopping Stopwatch...\nSealing Vault...\n")
+			sealerror := vaultclient.Sys().Seal()
+			if sealerror != nil {
+				log.Fatalf("Error sealing vault: %s", sealerror)
+			}
+			log.Println("Stopwatch Shutdown Complete")
+			os.Exit(0)
+		}
+	}()
 
 	// Listen on port 4000
 	router.Run(":4000")
