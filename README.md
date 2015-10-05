@@ -10,6 +10,9 @@ Variable Name | Description
 ------------ | -------------
 VAULT_ADDR | The address where stopwatch will find your vault server (e.g. http://127.0.0.1:8200)
 VAULT_TOKEN | The Vault Root Token
+VAULT_KEY_1 | Vault Key 1 to Unseal
+VAULT_KEY_2 | Vault Key 2 to Unseal
+VAULT_KEY_3 | Vault Key 3 to Unseal
 REDIS_PASSWORD | The password used to AUTH to redis
 SENDGRID_API_TOKEN | Sendgrid API Token for Email
 EMAIL_FROM_ADDRESS | When the application sends email, the From address
