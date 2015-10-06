@@ -78,6 +78,4 @@ Request Body:
 ## TODOs
 * Add support for multiple data stores (not just redis)
   * Write data abstraction layer and backend storage drivers for each storage backend
-* Developed against vault dev mode, need to test against vault production mode
-  * Needs to unseal vault if sealed, needs to load unseal keys from env variables
 * Add support for more cloud providers (joyent, azure, google cloud) not just AWS
