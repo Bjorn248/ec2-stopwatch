@@ -33,6 +33,6 @@ func newPool(server, password string) *redis.Pool {
 // Declare redis connection variables
 var (
 	pool          *redis.Pool
-	redisServer   = flag.String("redisServer", ":6379", "")
+	redisServer   = flag.String("redisServer", os.Getenv("REDIS_HOST_PORT"), "")
 	redisPassword = flag.String("redisPassword", os.Getenv("REDIS_PASSWORD"), "")
 )
