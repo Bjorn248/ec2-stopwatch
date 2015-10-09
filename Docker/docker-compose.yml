@@ -1,10 +1,12 @@
 stopwatch:
-  image: bjorn248/stopwatch
+  build: ./
   ports:
     - "4000:4000"
   links:
     - redis
     - vault
+  volumes:
+    - ..:/opt/stopwatch
 redis:
   image: bjorn248/redis
   volumes:
