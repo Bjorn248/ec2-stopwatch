@@ -1,0 +1,17 @@
+stopwatch:
+  image: bjorn248/stopwatch
+  ports:
+    - "4000:4000"
+  links:
+    - redis
+    - vault
+redis:
+  image: bjorn248/redis
+  volumes:
+    - ./data/redis:/data/redis
+vault:
+  image: bjorn248/vault
+  cap_add:
+    - IPC_LOCK
+  volumes:
+    - ./data/vault:/data/vault
