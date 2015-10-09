@@ -168,9 +168,9 @@ func verifyToken(c *gin.Context) {
 
 		go sendTokenEmail(verToken.Email, apiToken)
 		c.JSON(http.StatusOK, gin.H{
-			"status":           "email verified",
-			"verified":         true,
-			"api_token_status": fmt.Sprintf("email sent to %s", verToken.Email)})
+			"status":    "email verified",
+			"message":   "Keep it secret. Keep it safe.",
+			"api_token": apiToken})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": "error verifying email",
