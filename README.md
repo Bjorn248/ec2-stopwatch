@@ -1,4 +1,8 @@
 # ec2-stopwatch
+
+NOTE: This is deprecated and will no longer be supported. It's many years old at this point and honestly, putting something that serves this purpose in lambda would be much better.
+The concept is fine, but this implementation should probably be abandoned for something designed to run on lambda.
+
 HTTP API for managing ec2 instances. Scheduling periods when an instance should be on and off, and also setting instance expiration dates (not yet implemented)
 
 ## Dependencies
@@ -25,7 +29,7 @@ AWS_SECRET_KEY | The Secret Key used to make AWS API Calls
 
 ### `POST /register` User registration
 
-Request Body: 
+Request Body:
 ```json
 {
   "email": "some@email.com"
