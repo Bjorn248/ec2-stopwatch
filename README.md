@@ -1,5 +1,7 @@
 # ec2-stopwatch
 
+USE THIS: https://docs.aws.amazon.com/solutions/latest/ec2-scheduler/welcome.html
+
 NOTE: This is deprecated and will no longer be supported. It's many years old at this point and honestly, putting something that serves this purpose in lambda would be much better.
 The concept is fine, but this implementation should probably be abandoned for something designed to run on lambda.
 
